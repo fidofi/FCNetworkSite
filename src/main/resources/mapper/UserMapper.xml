@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fido.fcnetworksite.dao.UserDao">
+    <!--<resultMap id="UserResultMap" type="com.fido.fcnetworksite.entity.User">-->
+        <!--<id column="c_user_id" property="userId"/>-->
+        <!--<result column="c_status" property="status" jdbcType="ENUM"/>-->
+        <!--<result column="c_email" property="email" jdbcType="VARCHAR"/>-->
+        <!--<result column="c_nickname" property="nickName" jdbcType="VARCHAR"/>-->
+        <!--<result column="c_password" property="password" jdbcType="CHAR"/>-->
+        <!--<result column="c_create_time" property="createTime" jdbcType="TIMESTAMP"/>-->
+        <!--<result column="c_update_time" property="updateTime" jdbcType="TIMESTAMP"/>-->
+        <!--<result column="c_sex" property="sex" jdbcType="ENUM"/>-->
+        <!--<result column="c_birthday" property="birthday" jdbcType="DATE"/>-->
+        <!--<result column="c_photo_url" property="photoUrl" jdbcType="VARCHAR"/>-->
+        <!--<result column="c_salt" property="salt" jdbcType="CHAR"/>-->
+    <!--</resultMap>-->
+    <resultMap id="UserResultMap" type="com.fido.fcnetworksite.entity.User">
+        <id column="c_user_id" property="userId"/>
+        <result column="c_status" property="status"/>
+        <result column="c_email" property="email"/>
+        <result column="c_nickname" property="nickName"/>
+        <result column="c_password" property="password"/>
+        <result column="c_create_time" property="createTime"/>
+        <result column="c_update_time" property="updateTime"/>
+        <result column="c_sex" property="sex"/>
+        <result column="c_birthday" property="birthday"/>
+        <result column="c_photo_url" property="photoUrl"/>
+        <result column="c_salt" property="salt"/>
+    </resultMap>
+    <insert id="saveUser" parameterType="com.fido.fcnetworksite.entity.User">
+        insert INTO t_user (c_email, c_nickname, c_password,c_salt, c_sex,c_birthday,c_photo_url)
+        VALUES (#{email},
+                #{nickName},
+                #{password},
+                #{salt},
+                #{sex,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+                #{birthday},
+                #{photoUrl})
+    </insert>
+</mapper>
