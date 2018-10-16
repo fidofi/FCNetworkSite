@@ -1,13 +1,12 @@
 package com.fido.fcnetworksite.dao
 
 import com.fido.fcnetworksite.AbstractUnitTest
-import com.fido.fcnetworksite.entity.User
+import com.fido.fcnetworksite.entity.UserEntity
 import com.fido.fcnetworksite.enum.SexEnum
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 /**
  * @author: fido
@@ -21,9 +20,20 @@ class UserDaoTest : AbstractUnitTest() {
 
     @Test
     fun testSaveUser() {
-        val user: User = User(0, "984813437@qq.com", "fido", "EA48576F30BE1669971699C09AD05C94", SexEnum.FEMALE,
-                LocalDateTime.now(), LocalDateTime.now(), LocalDate.now(), "http://localhost:8080", "123456", 0)
-        userDao.saveUser(user)
+        var userEntity: UserEntity = UserEntity()
+        userEntity.nickName = "fido111"
+        userEntity.birthday = LocalDate.parse("2018-10-10")
+
 
     }
+
+    @Test
+    fun testUpdateUserInfo() {
+        var userEntity: UserEntity = userDao.findUserById(1)
+        userEntity.nickName = "fido飞飞"
+        userDao.updateUserInfo(userEntity)
+
+    }
+
+
 }
