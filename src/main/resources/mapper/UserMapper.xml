@@ -39,11 +39,11 @@
       c_photo_url = #{user.photoUrl}
     where c_user_id = #{user.userId}
   </update>
-    <update id="updateUserPassword" parameterType="com.fido.fcnetworksite.entity.UserEntity">
+    <update id="updateUserPassword">
     update t_user
-    set c_password = #{user.password},
-      c_salt = #{user.salt}
-    where c_user_id = #{user.userId}
+    set c_password = #{password},
+      c_salt = #{salt}
+    where c_user_id = #{email}
   </update>
     <select id="findUserById" resultMap="UserResultMap">
         select
@@ -51,10 +51,21 @@
         <include refid="Extend_Column_List"/>
         from t_user where c_user_id=#{userId}
     </select>
+    <select id="findUserByEmail" resultMap="UserResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        <include refid="Extend_Column_List"/>
+        from t_user where c_email=#{email}
+    </select>
     <select id="findUserLikeName" resultMap="UserResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_user where c_nickname like "%"#{nickName}"%"
+    </select>
+    <select id="findUserByName" resultMap="UserResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user where c_nickname =#{nickName}
     </select>
     <update id="freezeUser" parameterType="java.lang.Integer">
     update t_user

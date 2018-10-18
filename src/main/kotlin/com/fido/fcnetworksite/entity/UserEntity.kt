@@ -13,16 +13,27 @@ import java.util.*
 
 class UserEntity {
     var userId: Long = 0
-    var email: String? = null
-    var nickName: String? = null
-    var password: String? = null
+    var email: String = ""
+    var nickName: String = ""
+    var password: String = ""
     var sex: SexEnum = SexEnum.MALE
     var createTime: LocalDateTime = LocalDateTime.now()
     var updateTime: LocalDateTime = LocalDateTime.now()
     var birthday: LocalDate = LocalDate.now()
-    var photoUrl: String? = null
-    var salt: String? = null
+    var photoUrl: String = ""
+    var salt: String = ""
     var status: Int = 0
 
+    constructor(userId: Long, email: String, nickName: String, sex: SexEnum, birthday: LocalDate, photoUrl: String) {
+        this.userId = userId
+        this.email = email
+        this.nickName = nickName
+        this.sex = sex
+        this.birthday = birthday
+        this.photoUrl = photoUrl
+    }
+
+    constructor()
 }
+
 

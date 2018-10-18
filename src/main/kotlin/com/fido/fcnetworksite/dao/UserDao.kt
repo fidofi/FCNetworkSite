@@ -26,7 +26,10 @@ interface UserDao {
      * 修改用户密码
      */
 
-    fun updateUserPassword(@Param("user") user: UserEntity)
+    fun updateUserPassword(@Param("password") password: String,
+                           @Param("salt") salt: String,
+                           @Param("email") email: String)
+
 
     /**
      * 根据userId查找用户
@@ -35,10 +38,22 @@ interface UserDao {
     fun findUserById(@Param("userId") userId: Long): UserEntity
 
     /**
+     * 根据email查找用户
+     */
+    fun findUserByEmail(@Param("email") email: String): UserEntity
+
+
+    /**
      * 根据用户昵称模糊查找用户
      */
 
     fun findUserLikeName(@Param("nickName") nickName: String): List<UserEntity>
+
+    /**
+     * 根据用户昵称精确查找用户
+     */
+
+    fun findUserByName(@Param("nickName") nickName: String): UserEntity
 
     /**
      * 冻结用户
