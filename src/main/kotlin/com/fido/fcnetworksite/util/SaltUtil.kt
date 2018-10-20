@@ -1,4 +1,4 @@
-package com.fido.fcnetworksite.utils
+package com.fido.fcnetworksite.util
 
 import java.util.*
 

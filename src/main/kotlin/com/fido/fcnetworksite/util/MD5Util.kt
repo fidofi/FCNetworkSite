@@ -1,4 +1,4 @@
-package com.fido.fcnetworksite.utils
+package com.fido.fcnetworksite.util
 
 import org.springframework.util.DigestUtils
 import java.io.UnsupportedEncodingException
@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException
  * @desription:
  * @date: Created in 17:44 2018/10/18
  */
-object MD5Utils {
+object MD5Util {
 
     private const val UTF_8 = "UTF-8"
 
