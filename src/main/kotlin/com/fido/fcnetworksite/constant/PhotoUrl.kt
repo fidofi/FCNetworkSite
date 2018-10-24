@@ -7,6 +7,6 @@ package com.fido.fcnetworksite.constant
  */
 object PhotoUrl {
     //默认的图片地址
-    const val DEFAULT_PHOTO_URL = ""
+    const val DEFAULT_PHOTO_URL = "123"
 
 }

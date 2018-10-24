@@ -33,6 +33,16 @@ class UserEntity {
         this.photoUrl = photoUrl
     }
 
+    constructor(userId: Long, email: String, nickName: String, sex: SexEnum, birthday: LocalDate, photoUrl: String, password: String) {
+        this.userId = userId
+        this.email = email
+        this.nickName = nickName
+        this.sex = sex
+        this.birthday = birthday
+        this.photoUrl = photoUrl
+        this.password = password
+    }
+
     constructor()
 }
 

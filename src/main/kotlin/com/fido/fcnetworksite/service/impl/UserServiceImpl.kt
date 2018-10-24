@@ -1,14 +1,15 @@
 package com.fido.fcnetworksite.service.impl
 
+import com.fido.fcnetworksite.constant.PhotoUrl
 import com.fido.fcnetworksite.dao.UserDao
+import com.fido.fcnetworksite.entity.UserEntity
+import com.fido.fcnetworksite.enum.SexEnum
 import com.fido.fcnetworksite.enum.StatusEnum
 import com.fido.fcnetworksite.exception.UserException
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.MD5Util
 import com.fido.fcnetworksite.util.SaltUtils
 import com.fido.fcnetworksite.vo.UserVo
-import com.fido.fcnetworksite.vo.toUserEntity
-import com.fido.fcnetworksite.vo.toUserVo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -23,12 +24,16 @@ class UserServiceImpl : UserService {
     private lateinit var userDao: UserDao
 
     override fun saveUser(userVo: UserVo) {
-        userDao.saveUser(userVo.toUserEntity(userVo))
+        userDao
+        val userEntity = UserEntity(userVo.userId, userVo.email, userVo.nickName,
+                SexEnum.getSexEnumByCode(userVo.sex), userVo.birthday, userVo.photoUrl
+                ?: PhotoUrl.DEFAULT_PHOTO_URL, userVo.password)
+        userDao.saveUser(userEntity)
     }
 
     override fun updateUserInfo(userVo: UserVo) {
-        userDao.updateUserInfo(userVo.toUserEntity(userVo))
-
+        userDao.updateUserInfo(UserEntity(userVo.userId, userVo.email, userVo.nickName,
+                SexEnum.getSexEnumByCode(userVo.sex), userVo.birthday, userVo.photoUrl ?: PhotoUrl.DEFAULT_PHOTO_URL))
     }
 
     override fun updateUserPassword(email: String, newPassword: String, oldPassword: String) {
@@ -45,6 +50,7 @@ class UserServiceImpl : UserService {
             throw UserException(StatusEnum.PASSWORD_NOT_MATCH, "密码错误")
         }
     }
+
     override fun freezeUser(userId: Long) {
         userDao.freezeUser(userId)
     }
@@ -55,22 +61,22 @@ class UserServiceImpl : UserService {
 
     override fun selectUserById(userId: Long): UserVo {
         val userEntity = userDao.findUserById(userId)
-        return userEntity.toUserVo(userEntity)
+        return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code, userEntity.birthday, userEntity.photoUrl)
     }
 
     override fun selectUserByName(nickName: String): UserVo {
         val userEntity = userDao.findUserByName(nickName)
-        return userEntity.toUserVo(userEntity)
+        return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code, userEntity.birthday, userEntity.photoUrl)
     }
 
     override fun selectUserLikeName(nickName: String): List<UserVo> {
         val userList = userDao.findUserLikeName(nickName)
-        return userList.map { it.toUserVo(it) }
+        return userList.map { UserVo(it.userId, it.email, it.nickName, it.sex.code, it.birthday, it.photoUrl) }
     }
 
     override fun selectUserByEmail(email: String): UserVo {
         val userEntity = userDao.findUserByEmail(email)
-        return userEntity.toUserVo(userEntity)
+        return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code, userEntity.birthday, userEntity.photoUrl)
     }
 
 }

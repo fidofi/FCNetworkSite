@@ -73,5 +73,10 @@ class ResponseBuilder {
         const val MESSAGE = "message"
         const val STATUS_CODE = "code"
         const val TRACE = "trace"
+
+        fun create(): ResponseBuilder {
+            return ResponseBuilder()
+        }
+
     }
 }

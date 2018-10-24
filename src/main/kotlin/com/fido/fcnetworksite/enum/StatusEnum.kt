@@ -35,6 +35,16 @@ enum class StatusEnum(val code: Int, val message: String) {
     /**
      * 密码不匹配
      */
-    PASSWORD_NOT_MATCH(40003, "Password Not Match")
+    PASSWORD_NOT_MATCH(40003, "Password Not Match"),
+
+    /**
+     * 邮箱已经存在
+     */
+    EMAIL_REPEAT(40004, "Email already exist"),
+
+    /**
+     * 昵称已经存在
+     */
+    NICK_NAME_REPEAT(40005, "Nick name already exist")
 
 }

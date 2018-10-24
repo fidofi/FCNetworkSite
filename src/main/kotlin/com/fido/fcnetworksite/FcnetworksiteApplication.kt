@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
  * @date: Created in 17:11 2018/10/11
  */
 @SpringBootApplication
-@MapperScan("com.fido.fcnetworksite")
+@MapperScan("com.fido.fcnetworksite.dao")
 class FcnetworksiteApplication
 
 fun main(args: Array<String>) {
