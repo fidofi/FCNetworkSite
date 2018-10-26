@@ -15,6 +15,10 @@ interface MoodDao {
 
     fun selectMoodLikeContent(@Param("content") content: String): List<MoodEntity>
 
+    fun updateMoodInfo(@Param("moodId") moodId: Int,
+                       @Param("commentCount") commentCount: Long,
+                       @Param("likeCount") likeCount: Long)
+
     fun selectMoodByUserId(@Param("userId") userId: Long): List<MoodEntity>
 
     fun deleteMood(@Param("moodId") moodId: Int)

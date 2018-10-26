@@ -1,0 +1,27 @@
+package com.fido.fcnetworksite.service
+
+import com.fido.fcnetworksite.vo.MoodVo
+import com.fido.fcnetworksite.vo.PageInfoVo
+
+/**
+ * @author: wangxianfei
+ * @desription:
+ * @date: Created in 15:32 2018/10/26
+ */
+interface MoodService {
+    /**
+     * 插入心情
+     */
+    fun insertMood(moodVo: MoodVo)
+
+    /**
+     * 根据
+     */
+    fun selectMoodLikeContent(content: String, pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo>
+
+    fun updateMoodInfo(moodId: Int, commentCount: Long, likeCount: Long)
+
+    fun selectMoodByUserId(userId: Long, pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo>
+
+    fun deleteMood(moodId: Int)
+}

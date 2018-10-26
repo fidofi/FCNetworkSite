@@ -6,18 +6,24 @@
         <id column="c_mood_id" property="moodId"/>
         <result column="c_mood_content" property="content"/>
         <result column="c_user_id" property="userId"/>
+        <result column="c_comment_count" property="commentCount"/>
+        <result column="c_like_count" property="likeCount"/>
         <result column="c_create_time" property="createTime"/>
         <result column="c_update_time" property="updateTime"/>
         <result column="c_is_deleted" property="isDeleted"/>
     </resultMap>
     <sql id="Base_Column_List">
-    c_mood_id,c_mood_content,c_user_id
+    c_mood_id,c_mood_content,c_user_id,c_comment_count,c_like_count
   </sql>
     <insert id="insertMood" parameterType="com.fido.fcnetworksite.entity.MoodEntity">
         insert INTO t_mood (c_useri_id, c_mood_content)
         VALUES (#{userId},
                 #{content}
     </insert>
+    <update id="updateMoodInfo">
+        UPDATE t_mood SET c_comment_count=#{commentCount} AND c_like_count=#{likeCount}
+        WHERE c_mood_id=#{moodId}
+    </update>
     <select id="selectMoodByUserId" resultMap="MoodResultMap">
         select
         <include refid="Base_Column_List"/>

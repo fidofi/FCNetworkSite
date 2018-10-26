@@ -10,3 +10,7 @@ mybatis:
 server:
   servlet:
     context-path: "/fcnetworksite"
+
+pagehelper:
+  helperDialect=mysql
+  reasonable=true
