@@ -3,8 +3,11 @@ package com.fido.fcnetworksite.dao
 import com.fido.fcnetworksite.AbstractUnitTest
 import com.fido.fcnetworksite.entity.UserEntity
 import com.fido.fcnetworksite.enum.SexEnum
+import org.apache.commons.net.ftp.FTP
+import org.apache.commons.net.ftp.FTPClient
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
+import java.io.FileInputStream
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -34,6 +37,5 @@ class UserDaoTest : AbstractUnitTest() {
         userDao.updateUserInfo(userEntity)
 
     }
-
 
 }

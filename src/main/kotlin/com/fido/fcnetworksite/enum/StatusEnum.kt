@@ -19,7 +19,10 @@ enum class StatusEnum(val code: Int, val message: String) {
      * 服务器内部错误
      */
     INTERNAL_SERVER_ERROR(50000, "Server Internal Error"),
-
+    /**
+     * 请求参数非法
+     */
+    REQUEST_PARAMS_NOT_VALID(40000, "Request Params Illegal"),
     /**
      * 请求参数有误
      */
