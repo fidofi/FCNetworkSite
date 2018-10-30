@@ -14,9 +14,6 @@ interface MoodService {
      */
     fun insertMood(moodVo: MoodVo)
 
-    /**
-     * 根据
-     */
     fun selectMoodLikeContent(content: String, pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo>
 
     fun updateMoodInfo(moodId: Int, commentCount: Long, likeCount: Long)

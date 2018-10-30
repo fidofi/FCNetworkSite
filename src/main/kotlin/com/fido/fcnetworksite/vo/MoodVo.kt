@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank
  * @date: 2018/10/25 22:46
  * @description:
  */
-class MoodVo(
+data class MoodVo(
         val moodId: Int,
         val userId: Long,
         val userName: String,
