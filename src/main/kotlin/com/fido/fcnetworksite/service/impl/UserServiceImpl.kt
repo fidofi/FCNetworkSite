@@ -51,6 +51,10 @@ class UserServiceImpl : UserService {
         }
     }
 
+    override fun login(email: String, password: String) {
+        val user = userDao.findUserByEmail(email) ?: throw UserException(StatusEnum.USER_NOT_EXIST)
+    }
+
     override fun freezeUser(userId: Long) {
         userDao.freezeUser(userId)
     }
@@ -60,7 +64,7 @@ class UserServiceImpl : UserService {
     }
 
     override fun selectUserById(userId: Long): UserVo {
-        val userEntity = userDao.findUserById(userId)
+        val userEntity = userDao.findUserById(userId)?:throw UserException(StatusEnum.USER_NOT_EXIST)
         return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code, userEntity.birthday, userEntity.photoUrl)
     }
 

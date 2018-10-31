@@ -29,6 +29,12 @@ class UserController {
         return ResponseBuilder.create().ok().build()
     }
 
+    @ApiOperation(value = "用户登录")
+    @PostMapping("/login")
+    fun login(): DataMap {
+        return ResponseBuilder.create().ok().build()
+    }
+
     @ApiOperation(value = "更改用户基本信息")
     @PutMapping("/base-info")
     fun updateUserInfo(@RequestBody @Validated(UpdateUser::class) userVo: UserVo): DataMap {

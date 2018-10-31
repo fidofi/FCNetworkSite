@@ -44,10 +44,14 @@ enum class StatusEnum(val code: Int, val message: String) {
      * 邮箱已经存在
      */
     EMAIL_REPEAT(40004, "Email already exist"),
-
     /**
      * 昵称已经存在
      */
-    NICK_NAME_REPEAT(40005, "Nick name already exist")
+    NICK_NAME_REPEAT(40005, "Nick name already exist"),
+    /**
+     * 用户名不存在
+     */
+
+    USER_NOT_EXIST(40006, "User not exist")
 
 }

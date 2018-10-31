@@ -30,17 +30,16 @@ interface UserDao {
                            @Param("salt") salt: String,
                            @Param("email") email: String)
 
-
     /**
      * 根据userId查找用户
      */
 
-    fun findUserById(@Param("userId") userId: Long): UserEntity
+    fun findUserById(@Param("userId") userId: Long): UserEntity?
 
     /**
      * 根据email查找用户
      */
-    fun findUserByEmail(@Param("email") email: String): UserEntity
+    fun findUserByEmail(@Param("email") email: String): UserEntity?
 
 
     /**
