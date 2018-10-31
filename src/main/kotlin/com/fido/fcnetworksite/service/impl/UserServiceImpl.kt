@@ -33,11 +33,12 @@ class UserServiceImpl : UserService {
 
     override fun updateUserInfo(userVo: UserVo) {
         userDao.updateUserInfo(UserEntity(userVo.userId, userVo.email, userVo.nickName,
-                SexEnum.getSexEnumByCode(userVo.sex), userVo.birthday, userVo.photoUrl ?: PhotoUrl.DEFAULT_PHOTO_URL))
+                SexEnum.getSexEnumByCode(userVo.sex), userVo.birthday,
+                userVo.photoUrl ?: PhotoUrl.DEFAULT_PHOTO_URL))
     }
 
     override fun updateUserPassword(email: String, newPassword: String, oldPassword: String) {
-        val originUser = userDao.findUserByEmail(email)
+        val originUser = userDao.findUserByEmail(email) ?: throw UserException(StatusEnum.USER_NOT_EXIST)
         val originPassword = MD5Util.encrypt(oldPassword + originUser.salt)
         //旧密码输入正确
         if (originUser.password == originPassword) {
@@ -47,7 +48,7 @@ class UserServiceImpl : UserService {
         }
         //旧密码输入不正确
         else {
-            throw UserException(StatusEnum.PASSWORD_NOT_MATCH, "密码错误")
+            throw UserException(StatusEnum.PASSWORD_NOT_MATCH)
         }
     }
 
@@ -64,13 +65,15 @@ class UserServiceImpl : UserService {
     }
 
     override fun selectUserById(userId: Long): UserVo {
-        val userEntity = userDao.findUserById(userId)?:throw UserException(StatusEnum.USER_NOT_EXIST)
-        return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code, userEntity.birthday, userEntity.photoUrl)
+        val userEntity = userDao.findUserById(userId) ?: throw UserException(StatusEnum.USER_NOT_EXIST)
+        return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code,
+                userEntity.birthday, userEntity.photoUrl)
     }
 
     override fun selectUserByName(nickName: String): UserVo {
         val userEntity = userDao.findUserByName(nickName)
-        return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code, userEntity.birthday, userEntity.photoUrl)
+        return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code,
+                userEntity.birthday, userEntity.photoUrl)
     }
 
     override fun selectUserLikeName(nickName: String): List<UserVo> {
@@ -79,8 +82,9 @@ class UserServiceImpl : UserService {
     }
 
     override fun selectUserByEmail(email: String): UserVo {
-        val userEntity = userDao.findUserByEmail(email)
-        return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code, userEntity.birthday, userEntity.photoUrl)
+        val userEntity = userDao.findUserByEmail(email) ?: throw UserException(StatusEnum.USER_NOT_EXIST)
+        return UserVo(userEntity.userId, userEntity.email,
+                userEntity.nickName, userEntity.sex.code, userEntity.birthday, userEntity.photoUrl)
     }
 
 }

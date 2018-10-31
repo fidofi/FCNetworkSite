@@ -49,9 +49,8 @@ enum class StatusEnum(val code: Int, val message: String) {
      */
     NICK_NAME_REPEAT(40005, "Nick name already exist"),
     /**
-     * 用户名不存在
+     * 用户不存在
      */
-
     USER_NOT_EXIST(40006, "User not exist")
 
 }
