@@ -14,18 +14,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler
  * @description:
  */
 @ControllerAdvice
-class GloablExceptionHandler {
-
+class GlobalExceptionHandler {
     @ExceptionHandler(BaseException::class)
     fun businessException(exception: BaseException): DataMap {
         return exception.toResponse()
     }
-//
-//    @ExceptionHandler(MethodArgumentNotValidException::class)
-//    fun methodArgumentNotValidException(ex: MethodArgumentNotValidException): DataMap {
-//        return ResponseBuilder().code(StatusEnum.REQUEST_PARAMS_NOT_VALID.statusCode)
-//                .message(ValidatorUtils.buildErrorMessage(ex.bindingResult))
-//                .build()
-//    }
-
 }

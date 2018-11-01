@@ -2,7 +2,6 @@ package com.fido.fcnetworksite.vo
 
 import com.fido.fcnetworksite.annotation.SaveUser
 import com.fido.fcnetworksite.annotation.UpdateUser
-import com.fido.fcnetworksite.constant.PhotoUrl
 import com.fido.fcnetworksite.enum.SexEnum
 import java.time.LocalDate
 import javax.validation.constraints.NotBlank

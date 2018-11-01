@@ -3,13 +3,17 @@ package com.fido.fcnetworksite.controller
 import com.fido.fcnetworksite.annotation.SaveUser
 import com.fido.fcnetworksite.annotation.UpdateUser
 import com.fido.fcnetworksite.base.DataMap
+import com.fido.fcnetworksite.constant.PrefixConstant
+import com.fido.fcnetworksite.resolver.JsonParam
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.ResponseBuilder
+import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.vo.UserVo
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 
 /**
  * @author: Fido Wang (fromwxf@gmail.com)
@@ -31,7 +35,10 @@ class UserController {
 
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
-    fun login(): DataMap {
+    fun login(@JsonParam("email") email: String,
+              @JsonParam("password") password: String, request: HttpServletRequest): DataMap {
+        userService.login(email, password)
+        request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, UserInfoHolder.userInfo)
         return ResponseBuilder.create().ok().build()
     }
 
