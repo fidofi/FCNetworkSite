@@ -1,6 +1,7 @@
 package com.fido.fcnetworksite.service.impl
 
 import com.fido.fcnetworksite.dao.MoodDao
+import com.fido.fcnetworksite.dao.PhotoDao
 import com.fido.fcnetworksite.entity.MoodEntity
 import com.fido.fcnetworksite.service.MoodService
 import com.fido.fcnetworksite.vo.MoodVo
@@ -20,13 +21,19 @@ import org.springframework.stereotype.Service
 class MoodServiceImpl : MoodService {
     @Autowired
     private lateinit var moodDao: MoodDao
+    @Autowired
+    private lateinit var photoDao: PhotoDao
 
     override fun insertMood(moodVo: MoodVo) {
         moodDao.insertMood(MoodEntity(moodVo.content, moodVo.userId))
     }
 
     override fun selectMoodLikeContent(content: String, pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        PageHelper.startPage<MoodEntity>(pageIndex, pageSize)
+        val list = moodDao.selectMoodLikeContent(content)
+//        val result = PageInfoVo(list)
+//        result.
+        TODO("not implemented") //To change body of created functions
     }
 
     override fun updateMoodInfo(moodId: Int, commentCount: Long, likeCount: Long) {
@@ -37,7 +44,8 @@ class MoodServiceImpl : MoodService {
         PageHelper.startPage<MoodEntity>(pageIndex, pageSize)
         val list = moodDao.selectMoodByUserId(1)
         val result = PageInfo(list)
-        return PageInfoVo<MoodVo>(1, 1, 1, listOf(MoodVo(1, 1, "1", "1", 1, 1, listOf("1"))))
+//        return PageInfoVo<MoodVo>(1, 1, 1, listOf(MoodVo(1, 1, "1", "1", 1, 1, listOf("1"))))
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun deleteMood(moodId: Int) {

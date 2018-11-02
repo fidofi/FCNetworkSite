@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fido.fcnetworksite.dao.MoodDao">
-    <resultMap id="MoodResultMap" type="com.fido.fcnetworksite.entity.MoodEntity">
-        <id column="c_id" property="commentId"/>
+<mapper namespace="com.fido.fcnetworksite.dao.CommentDao">
+    <resultMap id="CommentResultMap" type="com.fido.fcnetworksite.entity.CommentEntity">
+        <id column="c_comment_id" property="commentId"/>
         <result column="c_content" property="content"/>
         <result column="c_mood_id" property="moodId"/>
         <result column="c_user_id" property="userId"/>
         <result column="c_create_time" property="createTime"/>
         <result column="c_update_time" property="updateTime"/>
         <result column="c_is_deleted" property="isDeleted"/>
+        <result column="c_is_read" property="isRead"/>
     </resultMap>
     <sql id="Base_Column_List">
-    c_id,c_content,c_mood_id,c_user_id,c_create_time
+    c_id,c_content,c_mood_id,c_user_id,c_create_time,c_is_read
   </sql>
-    <insert id="insertMood" parameterType="com.fido.fcnetworksite.entity.MoodEntity">
-        insert INTO t_mood (c_useri_id, c_mood_content)
-        VALUES (#{userId},
-                #{content}
+    <insert id="insert" parameterType="com.fido.fcnetworksite.entity.CommentEntity">
+        INSERT INTO t_comment (c_mood_id, c_user_id,c_content)
+        VALUES (#{moodId},
+                #{userId},
+                #{content})
     </insert>
-    <update id="updateMoodInfo">
-        UPDATE t_mood SET c_comment_count=#{commentCount} AND c_like_count=#{likeCount}
-        WHERE c_mood_id=#{moodId}
-    </update>
-    <select id="selectMoodByUserId" resultMap="MoodResultMap">
-        select
+    <select id="select" resultMap="CommentResultMap">
+        SELECT
         <include refid="Base_Column_List"/>
-        from t_mood where c_user_id=#{userId}
+        FROM t_comment WHERE c_mood_id=#{moodId}
     </select>
-    <select id="selectMoodLikeContent" resultMap="MoodResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_mood where c_mood_content like "%"#{content}"%"
-    </select>
-    <update id="deleteMood" parameterType="java.lang.Integer">
-    update t_mood
-    set c_is_deleted= 1,
-    where c_mood_id = #{moodId}
+    <update id="delete" parameterType="java.lang.Integer">
+    UPDATE t_comment
+    SET c_is_deleted= 1,
+    WHERE c_comment_id = #{commentId}
+  </update>
+    <update id="readComment" parameterType="java.lang.Integer">
+    UPDATE t_comment
+    SET c_is_read= 1,
+    WHERE c_comment_id = #{commentId}
   </update>
 </mapper>

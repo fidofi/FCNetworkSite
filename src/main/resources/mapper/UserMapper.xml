@@ -22,7 +22,7 @@
         c_password,c_salt
     </sql>
     <insert id="saveUser" parameterType="com.fido.fcnetworksite.entity.UserEntity">
-        insert INTO t_user (c_email, c_nickname, c_password,c_salt, c_sex,c_birthday,c_photo_url)
+        INSERT INTO t_user (c_email, c_nickname, c_password,c_salt, c_sex,c_birthday,c_photo_url)
         VALUES (#{email},
                 #{nickName},
                 #{password},
@@ -32,18 +32,18 @@
                 #{photoUrl})
     </insert>
     <update id="updateUserInfo" parameterType="com.fido.fcnetworksite.entity.UserEntity">
-    update t_user
-    set c_nickname = #{user.nickName},
+    UPDATE t_user
+    SET c_nickname = #{user.nickName},
       c_sex = #{user.sex},
       c_birthday = #{user.birthday},
       c_photo_url = #{user.photoUrl}
-    where c_user_id = #{user.userId}
+    WHERE c_user_id = #{user.userId}
   </update>
     <update id="updateUserPassword">
-    update t_user
-    set c_password = #{password},
+    UPDATE t_user
+    SET c_password = #{password},
       c_salt = #{salt}
-    where c_user_id = #{email}
+    WHERE c_user_id = #{email}
   </update>
     <select id="findUserById" resultMap="UserResultMap">
         select
@@ -52,15 +52,15 @@
         from t_user where c_user_id=#{userId}
     </select>
     <select id="findUserByEmail" resultMap="UserResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
         <include refid="Extend_Column_List"/>
-        from t_user where c_email=#{email}
+        FROM t_user WHERE c_email=#{email}
     </select>
     <select id="findUserLikeName" resultMap="UserResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from t_user where c_nickname like "%"#{nickName}"%"
+        FROM t_user WHERE c_nickname LIKE "%"#{nickName}"%"
     </select>
     <select id="findUserByName" resultMap="UserResultMap">
         select
@@ -68,13 +68,13 @@
         from t_user where c_nickname =#{nickName}
     </select>
     <update id="freezeUser" parameterType="java.lang.Integer">
-    update t_user
-    set c_staus = 1,
-    where c_user_id = #{userId}
+    UPDATE t_user
+    SET c_staus = 1,
+    WHERE c_user_id = #{userId}
   </update>
     <update id="unFreezeUser" parameterType="java.lang.Integer">
-    update t_user
-    set c_staus = 0,
-    where c_user_id = #{userId}
+    UPDATE t_user
+    SET c_staus = 0,
+    WHERE c_user_id = #{userId}
   </update>
 </mapper>

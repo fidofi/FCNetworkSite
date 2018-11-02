@@ -15,4 +15,4 @@ data class MoodVo(
         @NotBlank(message = "内容不能为空") val content: String,
         val commentCount: Long,
         val likeCount: Long,
-        val photoList: List<String>)
+        val photoList: List<PhotoVo>)

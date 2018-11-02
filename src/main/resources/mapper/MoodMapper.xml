@@ -16,7 +16,7 @@
     c_mood_id,c_mood_content,c_user_id,c_comment_count,c_like_count
   </sql>
     <insert id="insertMood" parameterType="com.fido.fcnetworksite.entity.MoodEntity">
-        insert INTO t_mood (c_useri_id, c_mood_content)
+        INSERT INTO t_mood (c_useri_id, c_mood_content)
         VALUES (#{userId},
                 #{content}
     </insert>
@@ -25,18 +25,28 @@
         WHERE c_mood_id=#{moodId}
     </update>
     <select id="selectMoodByUserId" resultMap="MoodResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from t_mood where c_user_id=#{userId}
+        FROM t_mood WHERE c_user_id=#{userId}
     </select>
     <select id="selectMoodLikeContent" resultMap="MoodResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from t_mood where c_mood_content like "%"#{content}"%"
+        FROM t_mood WHERE c_mood_content LIKE "%"#{content}"%"
+    </select>
+    <select id="countMoodLikeContent" resultMap="java.lang.Long">
+        SELECT
+        COUNT(c_mood_id)
+        FROM t_mood WHERE c_mood_content LIKE "%"#{content}"%"
+    </select>
+    <select id="countMoodByUserId" resultMap="java.lang.Long">
+        SELECT
+        COUNT(c_mood_id)
+        FROM t_mood WHERE c_mood_id = #{moodId}
     </select>
     <update id="deleteMood" parameterType="java.lang.Integer">
-    update t_mood
-    set c_is_deleted= 1,
-    where c_mood_id = #{moodId}
+    UPDATE t_mood
+    SET c_is_deleted= 1,
+    WHERE c_mood_id = #{moodId}
   </update>
 </mapper>

@@ -26,6 +26,6 @@
     <select id="select" resultMap="PhotoResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM t_mood_photo where c_mood_id =#{moodId} ORDER BY c_order
+        FROM t_mood_photo WHERE c_mood_id =#{moodId} ORDER BY c_order
     </select>
 </mapper>

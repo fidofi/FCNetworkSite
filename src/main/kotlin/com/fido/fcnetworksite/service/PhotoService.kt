@@ -7,5 +7,4 @@ package com.fido.fcnetworksite.service
  */
 interface PhotoService {
     fun uplodePhotos(): List<String>
-
 }

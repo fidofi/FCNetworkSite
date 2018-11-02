@@ -14,5 +14,6 @@ class CommentEntity {
     var userId: Long = 0
     var createTime: LocalDateTime = LocalDateTime.now()
     var updateTime: LocalDateTime = LocalDateTime.now()
+    var isRead: Int = 0
     var isDeleted: Int = 0
 }

@@ -21,5 +21,9 @@ interface MoodDao {
 
     fun selectMoodByUserId(@Param("userId") userId: Long): List<MoodEntity>
 
+    fun countMoodByUserId(@Param("userId") userId: Long): Long
+
+    fun countMoodLikeContent(@Param("content") content: String): Long
+
     fun deleteMood(@Param("moodId") moodId: Int)
 }
