@@ -22,7 +22,7 @@ class MoodServiceImpl : MoodService {
     private lateinit var moodDao: MoodDao
 
     override fun insertMood(moodVo: MoodVo) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        moodDao.insertMood(MoodEntity(moodVo.content, moodVo.userId))
     }
 
     override fun selectMoodLikeContent(content: String, pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo> {

@@ -23,19 +23,20 @@ class UserDaoTest : AbstractUnitTest() {
 
     @Test
     fun testSaveUser() {
-        var userEntity: UserEntity = UserEntity()
-        userEntity.nickName = "fido111"
-        userEntity.birthday = LocalDate.parse("2018-10-10")
+//        var userEntity: UserEntity = UserEntity()
+//        userEntity.nickName = "fido111"
+//        userEntity.birthday = LocalDate.parse("2018-10-10")
 
 
     }
 
     @Test
     fun testUpdateUserInfo() {
-        var userEntity: UserEntity = userDao.findUserById(1)
-        userEntity.nickName = "fido飞飞"
-        userDao.updateUserInfo(userEntity)
-
+//        var userEntity: UserEntity = userDao.findUserById(1)
+//        userEntity.nickName = "fido飞飞"
+//        userDao.updateUserInfo(userEntity)
+//
+//    }
     }
 
 }
