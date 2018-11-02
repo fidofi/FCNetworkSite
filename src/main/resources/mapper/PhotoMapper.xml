@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fido.fcnetworksite.dao.PhotoDao">
+    <resultMap id="PhotoResultMap" type="com.fido.fcnetworksite.entity.PhotoEntity">
+        <id column="c_id" property="id"/>
+        <result column="c_photo_url" property="photoUrl"/>
+        <result column="c_mood_id" property="moodId"/>
+        <result column="c_create_time" property="commentCount"/>
+        <result column="c_order" property="order"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    c_id,c_mood_id,c_photo_url,c_order
+  </sql>
+    <insert id="insert" parameterType="com.fido.fcnetworksite.entity.PhotoEntity">
+        INSERT INTO t_mood_photo (c_mood_id, c_photo_url,c_order)
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            (
+            #{entity.moodId},
+            #{entity.photoUrl},
+            #{entity.order}
+            )
+        </foreach>
+    </insert>
+    <select id="select" resultMap="PhotoResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_mood_photo where c_mood_id =#{moodId} ORDER BY c_order
+    </select>
+</mapper>
