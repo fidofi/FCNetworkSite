@@ -31,7 +31,9 @@ class PhotoServiceImpl : PhotoService {
 
     override fun batchSelectByMoodId(moodId: Int): Map<Int, List<PhotoVo>> {
         val photoList = photoDao.batchSelectByMoodId(moodId)
-        return null
+        val result = mutableMapOf<Int, List<PhotoVo>>()
+        photoList.groupBy { it.moodId }.forEach { moodId, photoList -> result[moodId] = photoList.map { PhotoVo(it.photoUrl, it.order) } }
+        return result
     }
 }
 
