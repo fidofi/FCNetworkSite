@@ -16,10 +16,10 @@
     c_id,c_content,c_mood_id,c_user_id,c_create_time,c_is_read
   </sql>
     <insert id="insert" parameterType="com.fido.fcnetworksite.entity.CommentEntity">
-        INSERT INTO t_comment (c_mood_id, c_user_id,c_content)
-        VALUES (#{moodId},
-                #{userId},
-                #{content})
+    INSERT INTO t_comment (c_mood_id, c_user_id,c_content)
+    VALUES (#{moodId},
+            #{userId},
+            #{content})
     </insert>
     <select id="select" resultMap="CommentResultMap">
         SELECT

@@ -2,14 +2,9 @@ package com.fido.fcnetworksite.dao
 
 import com.fido.fcnetworksite.AbstractUnitTest
 import com.fido.fcnetworksite.entity.UserEntity
-import com.fido.fcnetworksite.enum.SexEnum
-import org.apache.commons.net.ftp.FTP
-import org.apache.commons.net.ftp.FTPClient
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
-import java.io.FileInputStream
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 /**
  * @author: fido
@@ -23,10 +18,13 @@ class UserDaoTest : AbstractUnitTest() {
 
     @Test
     fun testSaveUser() {
-//        var userEntity: UserEntity = UserEntity()
-//        userEntity.nickName = "fido111"
-//        userEntity.birthday = LocalDate.parse("2018-10-10")
 
+        var userEntity: UserEntity = UserEntity()
+        userEntity.nickName = "fido111"
+        userEntity.birthday = LocalDate.parse("2018-10-10")
+        userEntity.email = "111"
+        userEntity.password = "333"
+        userDao.saveUser(userEntity)
 
     }
 

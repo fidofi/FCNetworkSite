@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fido.fcnetworksite.dao.UserDao">
     <resultMap id="UserResultMap" type="com.fido.fcnetworksite.entity.UserEntity">
-        <id column="c_user_id" property="userId"/>
+        <id column="c_user_id" property="userId" javaType="java.lang.Long"/>
         <result column="c_status" property="status"/>
         <result column="c_email" property="email"/>
         <result column="c_nickname" property="nickName"/>
@@ -14,29 +14,32 @@
         <result column="c_birthday" property="birthday"/>
         <result column="c_photo_url" property="photoUrl"/>
         <result column="c_salt" property="salt"/>
+        <result column="c_introduction" property="introduction"/>
     </resultMap>
     <sql id="Base_Column_List">
-    c_user_id, c_nickname, c_sex, c_birthday,c_photo_url,c_create_time
+    c_user_id, c_nickname, c_sex, c_introduction,c_birthday,c_photo_url,c_create_time
   </sql>
     <sql id="Extend_Column_List">
         c_password,c_salt
     </sql>
     <insert id="saveUser" parameterType="com.fido.fcnetworksite.entity.UserEntity">
-        INSERT INTO t_user (c_email, c_nickname, c_password,c_salt, c_sex,c_birthday,c_photo_url)
+        INSERT INTO t_user (c_email, c_nickname, c_password,c_salt, c_sex,c_birthday,c_photo_url,c_introduction)
         VALUES (#{email},
                 #{nickName},
                 #{password},
                 #{salt},
                 #{sex,typeHandler=org.apache.ibatis.type.EnumTypeHandler},
                 #{birthday},
-                #{photoUrl})
+                #{photoUrl},
+                #{introduction})
     </insert>
     <update id="updateUserInfo" parameterType="com.fido.fcnetworksite.entity.UserEntity">
     UPDATE t_user
     SET c_nickname = #{user.nickName},
       c_sex = #{user.sex},
       c_birthday = #{user.birthday},
-      c_photo_url = #{user.photoUrl}
+      c_photo_url = #{user.photoUrl},
+      c_introduction=#{user.introduction}
     WHERE c_user_id = #{user.userId}
   </update>
     <update id="updateUserPassword">
@@ -76,12 +79,12 @@
         </foreach>
         )
     </select>
-    <update id="freezeUser" parameterType="java.lang.Integer">
+    <update id="freezeUser" parameterType="java.lang.Long">
     UPDATE t_user
     SET c_staus = 1,
     WHERE c_user_id = #{userId}
   </update>
-    <update id="unFreezeUser" parameterType="java.lang.Integer">
+    <update id="unFreezeUser" parameterType="java.lang.Long">
     UPDATE t_user
     SET c_staus = 0,
     WHERE c_user_id = #{userId}

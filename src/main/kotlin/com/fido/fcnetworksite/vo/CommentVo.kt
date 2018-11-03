@@ -7,4 +7,5 @@ import java.time.LocalDateTime
  * @date: 2018/11/2 22:57
  * @description:
  */
-data class CommentVo(val moodId: Int, val commentId: Int, val userId: Int, val createTime: LocalDateTime)
+data class CommentVo(val moodId: Int, val content: String, val userId: Long,
+                     val commentId: Int = 0, val userName: String = "", val createTime: LocalDateTime = LocalDateTime.now())

@@ -9,10 +9,10 @@ import javax.validation.constraints.NotBlank
  * @description:
  */
 data class MoodVo(
-        val moodId: Int,
-        val userId: Long,
-        val userName: String,
+        val moodId: Int = 0,
+        val userId: Long = 0,
+        val userName: String = "",
         @NotBlank(message = "内容不能为空") val content: String,
-        val commentCount: Long,
-        val likeCount: Long,
-        val photoList: List<PhotoVo>)
+        val commentCount: Long = 0,
+        val likeCount: Long = 0,
+        val photoList: List<PhotoVo>?)

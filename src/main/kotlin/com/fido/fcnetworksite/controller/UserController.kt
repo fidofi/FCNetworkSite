@@ -9,6 +9,7 @@ import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.ResponseBuilder
 import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.vo.UserVo
+import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.annotation.Validated
@@ -22,12 +23,13 @@ import javax.servlet.http.HttpServletRequest
  */
 @RestController
 @RequestMapping("/v1/user")
+@Api(description = "用户相关的接口")
 class UserController {
     @Autowired
     private lateinit var userService: UserService
 
     @ApiOperation(value = "用户注册")
-    @PostMapping
+    @PostMapping("/register")
     fun saveUser(@Validated(SaveUser::class) @RequestBody userVo: UserVo): DataMap {
         userService.saveUser(userVo)
         return ResponseBuilder.create().ok().build()

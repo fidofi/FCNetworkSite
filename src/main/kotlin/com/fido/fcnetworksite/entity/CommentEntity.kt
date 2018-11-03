@@ -16,4 +16,13 @@ class CommentEntity {
     var updateTime: LocalDateTime = LocalDateTime.now()
     var isRead: Int = 0
     var isDeleted: Int = 0
+
+    constructor()
+    constructor(content: String, moodId: Int, userId: Long) {
+        this.content = content
+        this.moodId = moodId
+        this.userId = userId
+    }
+
+
 }

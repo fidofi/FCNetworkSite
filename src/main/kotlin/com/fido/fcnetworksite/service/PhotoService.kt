@@ -1,6 +1,7 @@
 package com.fido.fcnetworksite.service
 
 import com.fido.fcnetworksite.vo.PhotoVo
+import org.springframework.web.multipart.MultipartFile
 
 /**
  * @author: wangxianfei
@@ -8,11 +9,11 @@ import com.fido.fcnetworksite.vo.PhotoVo
  * @date: Created in 13:12 2018/10/30
  */
 interface PhotoService {
-    fun uplodePhotos(): List<String>
+    fun uploadPhotos(userId: Long, photo: MultipartFile): List<String>
 
     fun batchInsert(moodId: Int, list: List<PhotoVo>)
 
     fun select(moodId: Int): List<PhotoVo>
 
-    fun batchSelectByMoodId(moodId: Int): Map<Int, List<PhotoVo>>
+    fun batchSelectByMoodId(moodIdList: List<Int>): Map<Int, List<PhotoVo>>
 }

@@ -19,5 +19,6 @@ class UserVo(@NotNull(message = "userId不能为空", groups = [UpdateUser::clas
              @NotNull(message = "birthday不能为空", groups = [SaveUser::class, UpdateUser::class])
              val birthday: LocalDate = LocalDate.now(),
              val photoUrl: String?,
+             val introduction: String,
              @NotBlank(message = "password不能为空", groups = [SaveUser::class]) val password: String = ""
 )

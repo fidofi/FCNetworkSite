@@ -2,9 +2,9 @@ package com.fido.fcnetworksite.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import springfox.documentation.builders.ApiInfoBuilder
 import springfox.documentation.builders.PathSelectors
-import springfox.documentation.builders.PathSelectors.regex
 import springfox.documentation.builders.RequestHandlerSelectors
 import springfox.documentation.service.ApiInfo
 import springfox.documentation.spi.DocumentationType
@@ -18,6 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
  */
 @Configuration
 @EnableSwagger2
+@EnableWebMvc
 class SwaggerConfig {
     @Bean
     fun productApi(): Docket {
@@ -34,8 +35,8 @@ class SwaggerConfig {
 
     private fun apiInfo(): ApiInfo {
         return ApiInfoBuilder()
-                .title("Swagger2的Restful API 文档")
-                .description("Spring Boot和Swagger的结合")
+                .title("FcNetworkSite项目的API文档")
+                .description("相关接口的文档")
                 .version("1.0")
                 .build()
     }

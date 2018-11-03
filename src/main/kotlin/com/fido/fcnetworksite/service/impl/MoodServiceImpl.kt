@@ -27,16 +27,22 @@ class MoodServiceImpl : MoodService {
 
     override fun insertMood(moodVo: MoodVo) {
         val moodId = moodDao.insertMood(MoodEntity(moodVo.content, moodVo.userId))
-        photoService.batchInsert(moodId, moodVo.photoList)
+        if (moodVo.photoList != null)
+            photoService.batchInsert(moodId, moodVo.photoList)
     }
 
     override fun selectMoodLikeContent(content: String, pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo> {
         PageHelper.startPage<MoodEntity>(pageIndex, pageSize)
         val moodList = moodDao.selectMoodLikeContent(content)
-//        val result = list.map { MoodVo(it.moodId, it.userId,) }
-//        val total = moodDao.countMoodLikeContent(content)
-//        return PageInfoVo(total, pageSize, pageIndex, list)
-
+        val total = moodDao.countMoodLikeContent(content)
+        val userIdList = moodList.map { it.userId }.toSet().toList()
+        val userNameMap = userService.batchSelectUser(userIdList).associateBy({ it.userId }, { it.nickName }).toMap()
+        val photoMap = photoService.batchSelectByMoodId(moodList.map { it.moodId })
+        return PageInfoVo(total, pageIndex, pageSize, moodList.map {
+            MoodVo(it.moodId, it.userId, userNameMap[it.userId]!!,
+                    it.content, it.commentCount, it.likeCount, photoMap[it.moodId])
+        }
+        )
     }
 
     override fun updateMoodInfo(moodId: Int, commentCount: Long, likeCount: Long) {
@@ -47,12 +53,12 @@ class MoodServiceImpl : MoodService {
         PageHelper.startPage<MoodEntity>(pageIndex, pageSize)
         val moodList = moodDao.selectMoodByUserId(userId)
         val total = moodDao.countMoodByUserId(userId)
-        val nickName = userService.selectUserById(userId).nickName
         val userIdList = moodList.map { it.userId }.toSet().toList()
         val userNameMap = userService.batchSelectUser(userIdList).associateBy({ it.userId }, { it.nickName }).toMap()
+        val photoMap = photoService.batchSelectByMoodId(moodList.map { it.moodId })
         return PageInfoVo(total, pageIndex, pageSize, moodList.map {
             MoodVo(it.moodId, it.userId, userNameMap[it.userId]!!,
-                    it.content, it.commentCount, it.likeCount, )
+                    it.content, it.commentCount, it.likeCount, photoMap[it.moodId])
         }
         )
     }
