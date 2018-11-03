@@ -28,4 +28,13 @@
         <include refid="Base_Column_List"/>
         FROM t_mood_photo WHERE c_mood_id =#{moodId} ORDER BY c_order
     </select>
+    <select id="batchSelectByMoodId" resultMap="PhotoResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_mood_photo WHERE c_mood_id IN(
+        <foreach collection="moodIdList" item="moodId" separator=",">
+            #{moodId}
+        </foreach>
+        )
+    </select>
 </mapper>

@@ -16,4 +16,6 @@ interface PhotoDao {
 
     fun insert(@Param("entities") entities: List<PhotoEntity>)
 
+    fun batchSelectByMoodId(@Param("moodIdList") moodId: Int): List<PhotoEntity>
+
 }

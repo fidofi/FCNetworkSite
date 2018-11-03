@@ -66,5 +66,10 @@ interface UserDao {
 
     fun unFreezeUser(@Param("userId") userId: Long)
 
+    /**
+     * 批量查找用户
+     */
+    fun batchListUser(@Param("userIdList") userIdList: List<Long>): List<UserEntity>
+
 
 }

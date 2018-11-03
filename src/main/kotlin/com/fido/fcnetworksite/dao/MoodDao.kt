@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository
  */
 @Repository
 interface MoodDao {
-    fun insertMood(moodEntity: MoodEntity)
+    fun insertMood(moodEntity: MoodEntity):Int
 
     fun selectMoodLikeContent(@Param("content") content: String): List<MoodEntity>
 

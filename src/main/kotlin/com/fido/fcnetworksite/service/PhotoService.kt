@@ -1,5 +1,7 @@
 package com.fido.fcnetworksite.service
 
+import com.fido.fcnetworksite.vo.PhotoVo
+
 /**
  * @author: wangxianfei
  * @desription:
@@ -7,4 +9,10 @@ package com.fido.fcnetworksite.service
  */
 interface PhotoService {
     fun uplodePhotos(): List<String>
+
+    fun batchInsert(moodId: Int, list: List<PhotoVo>)
+
+    fun select(moodId: Int): List<PhotoVo>
+
+    fun batchSelectByMoodId(moodId: Int): Map<Int, List<PhotoVo>>
 }

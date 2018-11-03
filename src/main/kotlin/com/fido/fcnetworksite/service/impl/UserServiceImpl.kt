@@ -95,4 +95,7 @@ class UserServiceImpl : UserService {
                 userEntity.nickName, userEntity.sex.code, userEntity.birthday, userEntity.photoUrl)
     }
 
+    override fun batchSelectUser(userIdList: List<Long>): List<UserVo> {
+        return userDao.batchListUser(userIdList).map { UserVo(it.userId, it.email, it.nickName, it.sex.code, it.birthday, it.photoUrl) }
+    }
 }

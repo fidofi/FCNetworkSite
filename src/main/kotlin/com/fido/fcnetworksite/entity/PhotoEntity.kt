@@ -10,8 +10,8 @@ import java.time.LocalDateTime
 class PhotoEntity {
     var moodId: Int = 0
     var photoUrl: String = ""
-    var id: Int = 0
     var order: Int = 0
+    var id: Int = 0
     val createTime: LocalDateTime = LocalDateTime.now()
 
     constructor()

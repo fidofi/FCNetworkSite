@@ -16,9 +16,12 @@
     c_mood_id,c_mood_content,c_user_id,c_comment_count,c_like_count
   </sql>
     <insert id="insertMood" parameterType="com.fido.fcnetworksite.entity.MoodEntity">
+        <selectKey keyProperty="c_mood_id" order="AFTER" resultType="java.lang.Integer">
+        SELECT LAST_INSERT_ID()
+        </selectKey>
         INSERT INTO t_mood (c_useri_id, c_mood_content)
         VALUES (#{userId},
-                #{content}
+        #{content}
     </insert>
     <update id="updateMoodInfo">
         UPDATE t_mood SET c_comment_count=#{commentCount} AND c_like_count=#{likeCount}

@@ -27,4 +27,6 @@ interface UserService {
     fun selectUserByEmail(email: String): UserVo
 
     fun selectUserById(userId: Long): UserVo
+
+    fun batchSelectUser(userIdList: List<Long>): List<UserVo>
 }

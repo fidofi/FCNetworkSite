@@ -46,10 +46,10 @@
     WHERE c_user_id = #{email}
   </update>
     <select id="findUserById" resultMap="UserResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
         <include refid="Extend_Column_List"/>
-        from t_user where c_user_id=#{userId}
+        FROM t_user WHERE c_user_id=#{userId}
     </select>
     <select id="findUserByEmail" resultMap="UserResultMap">
         SELECT
@@ -63,9 +63,18 @@
         FROM t_user WHERE c_nickname LIKE "%"#{nickName}"%"
     </select>
     <select id="findUserByName" resultMap="UserResultMap">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from t_user where c_nickname =#{nickName}
+        FROM t_user WHERE c_nickname =#{nickName}
+    </select>
+    <select id="batchListUser" resultMap="UserResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_user WHERE c_user_id IN (
+        <foreach collection="userIdList" item="userId" separator=",">
+            #{userId}
+        </foreach>
+        )
     </select>
     <update id="freezeUser" parameterType="java.lang.Integer">
     UPDATE t_user

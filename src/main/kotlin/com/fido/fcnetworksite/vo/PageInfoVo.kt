@@ -7,4 +7,4 @@ import java.io.Serializable
  * @desription:
  * @date: Created in 15:51 2018/10/26
  */
-class PageInfoVo<T>(val total: Long, val pageSize: Int, val pageIndex: Int, val data: List<T>) : Serializable
+class PageInfoVo<T>(val total: Long, val pageIndex: Int, val pageSize: Int, val data: List<T>) : Serializable
