@@ -4,10 +4,10 @@ import com.fido.fcnetworksite.base.DataMap
 import com.fido.fcnetworksite.resolver.JsonParam
 import com.fido.fcnetworksite.service.MoodService
 import com.fido.fcnetworksite.util.ResponseBuilder
+import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.vo.MoodVo
 import com.fido.fcnetworksite.vo.PhotoVo
 import io.swagger.annotations.ApiOperation
-import org.apache.ibatis.annotations.Delete
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -24,13 +24,13 @@ class MoodController {
 
     @PostMapping()
     @ApiOperation(value = "发布心情")
-    fun createMood(@JsonParam("content") content: String,
-                   @JsonParam("photoUrlList") photoUrlList: List<PhotoVo>): DataMap {
-        moodService.insertMood(MoodVo(content = content, photoList = photoUrlList))
+    fun createMood(@JsonParam(value = "content") content: String,
+                   @JsonParam(value = "photoUrlList", required = false, list = true, rawType = PhotoVo::class) photoUrlList: List<PhotoVo>): DataMap {
+        moodService.insertMood(MoodVo(content = content, photoList = photoUrlList, userId = UserInfoHolder.userId))
         return ResponseBuilder.create().ok().build()
     }
 
-    @Delete("/{moodId}")
+    @DeleteMapping("/{moodId}")
     @ApiOperation(value = "删除心情")
     fun deleteMood(@PathVariable("moodId") moodId: Int): DataMap {
         moodService.deleteMood(moodId)

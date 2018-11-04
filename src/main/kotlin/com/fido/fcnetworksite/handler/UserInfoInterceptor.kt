@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletResponse
 class UserInfoInterceptor : HandlerInterceptorAdapter() {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse,
                            handler: Any): Boolean {
+        val uri = request.requestURI
+        if (uri == "/fcnetworksite/v1/user/login") {
+            return true
+
+        }
         val session = request.session
         //会话暂未失效
         if (session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX) != null) {

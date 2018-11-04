@@ -13,7 +13,9 @@ import com.fido.fcnetworksite.util.SaltUtils
 import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.vo.UserVo
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpRequest
 import org.springframework.stereotype.Service
+import javax.servlet.http.HttpServletRequest
 
 /**
  * @author: wangxianfei
@@ -70,6 +72,7 @@ class UserServiceImpl : UserService {
         }
         //登陆成功,存储用户信息
         val userVo = UserVo(user.userId, user.email, user.nickName, user.sex.code, user.birthday, user.photoUrl, user.introduction)
+
         UserInfoHolder.initLocal(userVo)
     }
 

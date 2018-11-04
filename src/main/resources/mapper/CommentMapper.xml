@@ -13,7 +13,7 @@
         <result column="c_is_read" property="isRead"/>
     </resultMap>
     <sql id="Base_Column_List">
-    c_id,c_content,c_mood_id,c_user_id,c_create_time,c_is_read
+    c_comment_id,c_content,c_mood_id,c_user_id,c_create_time,c_is_read
   </sql>
     <insert id="insert" parameterType="com.fido.fcnetworksite.entity.CommentEntity">
     INSERT INTO t_comment (c_mood_id, c_user_id,c_content)
@@ -28,12 +28,12 @@
     </select>
     <update id="delete" parameterType="java.lang.Integer">
     UPDATE t_comment
-    SET c_is_deleted= 1,
+    SET c_is_deleted= 1
     WHERE c_comment_id = #{commentId}
   </update>
     <update id="readComment" parameterType="java.lang.Integer">
     UPDATE t_comment
-    SET c_is_read= 1,
+    SET c_is_read= 1
     WHERE c_comment_id = #{commentId}
   </update>
 </mapper>

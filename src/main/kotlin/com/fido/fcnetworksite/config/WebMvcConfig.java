@@ -1,8 +1,10 @@
 package com.fido.fcnetworksite.config;
 
+import com.fido.fcnetworksite.handler.UserInfoInterceptor;
 import com.fido.fcnetworksite.resolver.JsonParamArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -30,8 +32,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
-    //    @Override
-    //    public void addInterceptors(InterceptorRegistry registry) {
-    //        registry.addInterceptor(new UserInfoInterceptor());
-    //    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new UserInfoInterceptor());
+    }
 }

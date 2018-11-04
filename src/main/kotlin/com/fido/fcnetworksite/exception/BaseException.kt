@@ -18,12 +18,8 @@ open class BaseException(statusCode: StatusEnum, message: String?) : RuntimeExce
         return toResponseBuilder().build()
     }
 
-    open fun toResponse(trace: String): DataMap {
-        return toResponseBuilder().trace(trace).build()
-    }
-
     private fun toResponseBuilder(): ResponseBuilder {
-        return ResponseBuilder().error(code).message(msg())
+        return ResponseBuilder().code(code).message(msg())
     }
 
     fun msg(): String {

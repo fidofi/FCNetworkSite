@@ -26,9 +26,10 @@ class MoodServiceImpl : MoodService {
     private lateinit var userService: UserService
 
     override fun insertMood(moodVo: MoodVo) {
-        val moodId = moodDao.insertMood(MoodEntity(moodVo.content, moodVo.userId))
-        if (moodVo.photoList != null)
-            photoService.batchInsert(moodId, moodVo.photoList)
+        val moodEntity = MoodEntity(moodVo.content, moodVo.userId)
+        moodDao.insertMood(moodEntity)
+        if (moodVo.photoList != null && moodVo.photoList.isNotEmpty())
+            photoService.batchInsert(moodEntity.moodId, moodVo.photoList)
     }
 
     override fun selectMoodLikeContent(content: String, pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo> {

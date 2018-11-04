@@ -4,14 +4,20 @@ import com.fido.fcnetworksite.annotation.SaveUser
 import com.fido.fcnetworksite.annotation.UpdateUser
 import com.fido.fcnetworksite.base.DataMap
 import com.fido.fcnetworksite.constant.PrefixConstant
+import com.fido.fcnetworksite.enum.StatusEnum
+import com.fido.fcnetworksite.exception.BaseException
 import com.fido.fcnetworksite.resolver.JsonParam
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.ResponseBuilder
 import com.fido.fcnetworksite.util.UserInfoHolder
+import com.fido.fcnetworksite.util.ValidatorUtils
 import com.fido.fcnetworksite.vo.UserVo
 import io.swagger.annotations.Api
+import io.swagger.annotations.ApiImplicitParam
+import io.swagger.annotations.ApiImplicitParams
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
@@ -28,14 +34,19 @@ class UserController {
     @Autowired
     private lateinit var userService: UserService
 
-    @ApiOperation(value = "用户注册")
+    @ApiOperation(value = "用户注册", notes = "用户注册必填参数：email,nickName,password,introduction,其他不传的话有默认值")
     @PostMapping("/register")
-    fun saveUser(@Validated(SaveUser::class) @RequestBody userVo: UserVo): DataMap {
+    fun saveUser(@Validated(SaveUser::class) @RequestBody userVo: UserVo, result: BindingResult): DataMap {
         userService.saveUser(userVo)
+        if (result.hasErrors()) {
+            throw BaseException(StatusEnum.REQUEST_PARAMS_NOT_VALID, ValidatorUtils.buildErrorMessage(result))
+        }
         return ResponseBuilder.create().ok().build()
     }
 
-    @ApiOperation(value = "用户登录")
+    @ApiOperation(value = "用户登录", notes = "用户登录填写邮件和密码，会有对应的错误提示")
+    @ApiImplicitParams(ApiImplicitParam(dataType = "String", name = "email", value = "邮件地址", required = true),
+            ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true))
     @PostMapping("/login")
     fun login(@JsonParam("email") email: String,
               @JsonParam("password") password: String, request: HttpServletRequest): DataMap {
@@ -53,9 +64,9 @@ class UserController {
 
     @ApiOperation(value = "更改用户密码")
     @PutMapping("/password")
-    fun updatePassword(@RequestParam("email") email: String,
-                       @RequestParam("oldPassword") oldPassword: String,
-                       @RequestParam("newPassword") newPassword: String): DataMap {
+    fun updatePassword(@JsonParam("email") email: String,
+                       @JsonParam("oldPassword") oldPassword: String,
+                       @JsonParam("newPassword") newPassword: String): DataMap {
         userService.updateUserPassword(email, newPassword, oldPassword)
         return ResponseBuilder.create().ok().build()
     }

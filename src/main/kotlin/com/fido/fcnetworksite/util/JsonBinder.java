@@ -34,23 +34,17 @@ public class JsonBinder {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
-    /**
-     * 创建输出全部属性到Json字符串的Binder.
-     */
+    /** 创建输出全部属性到Json字符串的Binder. */
     public static JsonBinder buildNormalBinder() {
         return new JsonBinder(Include.ALWAYS);
     }
 
-    /**
-     * 创建只输出非空属性到Json字符串的Binder.
-     */
+    /** 创建只输出非空属性到Json字符串的Binder. */
     public static JsonBinder buildNonNullBinder() {
         return new JsonBinder(Include.NON_NULL);
     }
 
-    /**
-     * 创建只输出初始值被改变的属性到Json字符串的Binder.
-     */
+    /** 创建只输出初始值被改变的属性到Json字符串的Binder. */
     public static JsonBinder buildNonDefaultBinder() {
         return new JsonBinder(Include.NON_DEFAULT);
     }
@@ -65,7 +59,6 @@ public class JsonBinder {
         if (StringUtils.isEmpty(jsonString)) {
             return null;
         }
-
         try {
             return mapper.readValue(jsonString, clazz);
         } catch (IOException e) {
@@ -74,9 +67,7 @@ public class JsonBinder {
         }
     }
 
-    /**
-     * 如果对象为Null,返回"null". 如果集合为空集合,返回"[]".
-     */
+    /** 如果对象为Null,返回"null". 如果集合为空集合,返回"[]". */
     public String toJson(Object object) {
         if (object == null) {
             return "";
@@ -90,9 +81,7 @@ public class JsonBinder {
         }
     }
 
-    /**
-     * 取出Mapper做进一步的设置或使用其他序列化API.
-     */
+    /** 取出Mapper做进一步的设置或使用其他序列化API. */
     public ObjectMapper getMapper() {
         return mapper;
     }

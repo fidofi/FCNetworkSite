@@ -15,7 +15,7 @@ pagehelper:
   helperDialect=mysql
   reasonable=true
 
-
-fcnetworksite:
-  ftp:
-    url: 47.106.199.194
+# 打印sql
+logging:
+  level:
+    com.onepro.custom.mapper: DEBUG

@@ -11,7 +11,6 @@ import com.fido.fcnetworksite.enum.StatusEnum
 class ResponseBuilder {
     private var code: Int = 0
     private var message: String? = null
-    private var trace: String? = null
     private val data = DataMap()
 
     fun ok(): ResponseBuilder {
@@ -48,10 +47,6 @@ class ResponseBuilder {
         return this
     }
 
-    fun trace(trace: String): ResponseBuilder {
-        this.trace = trace
-        return this
-    }
 
     fun build(): DataMap {
         val dataMap = DataMap()
@@ -59,9 +54,6 @@ class ResponseBuilder {
         dataMap.putAll(data)
         if (message != null) {
             dataMap.addAttribute(ResponseBuilder.MESSAGE, message!!)
-        }
-        if (code != StatusEnum.SUCCESS.code) {
-            dataMap.addAttribute(ResponseBuilder.TRACE, trace!!)
         }
         return dataMap
     }

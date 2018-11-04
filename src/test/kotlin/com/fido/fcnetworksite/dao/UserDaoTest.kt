@@ -37,4 +37,10 @@ class UserDaoTest : AbstractUnitTest() {
 //    }
     }
 
+    @Test
+    fun testFindByEmail() {
+        println(userDao.findUserByEmail("fromwxf@163.com"))
+    }
+
+
 }

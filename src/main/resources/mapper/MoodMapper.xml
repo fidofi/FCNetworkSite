@@ -15,13 +15,11 @@
     <sql id="Base_Column_List">
     c_mood_id,c_mood_content,c_user_id,c_comment_count,c_like_count
   </sql>
-    <insert id="insertMood" parameterType="com.fido.fcnetworksite.entity.MoodEntity">
-        <selectKey keyProperty="c_mood_id" order="AFTER" resultType="java.lang.Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        INSERT INTO t_mood (c_useri_id, c_mood_content)
+    <insert id="insertMood" useGeneratedKeys="true" keyProperty="moodId"
+            parameterType="com.fido.fcnetworksite.entity.MoodEntity">
+        INSERT INTO t_mood (c_user_id, c_mood_content)
         VALUES (#{userId},
-        #{content}
+        #{content})
     </insert>
     <update id="updateMoodInfo">
         UPDATE t_mood SET c_comment_count=#{commentCount} AND c_like_count=#{likeCount}
@@ -45,11 +43,11 @@
     <select id="countMoodByUserId" resultType="java.lang.Long">
         SELECT
         COUNT(c_mood_id)
-        FROM t_mood WHERE c_mood_id = #{moodId} AND c_is_deleted= 0
+        FROM t_mood WHERE c_user_id = #{userId} AND c_is_deleted= 0
     </select>
     <update id="deleteMood" parameterType="java.lang.Integer">
     UPDATE t_mood
-    SET c_is_deleted= 1,
+    SET c_is_deleted= 1
     WHERE c_mood_id = #{moodId}
   </update>
 </mapper>
