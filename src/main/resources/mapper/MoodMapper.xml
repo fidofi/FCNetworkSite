@@ -25,6 +25,7 @@
         UPDATE t_mood SET c_comment_count=#{commentCount} AND c_like_count=#{likeCount}
         WHERE c_mood_id=#{moodId}
     </update>
+
     <select id="selectMoodByUserId" resultMap="MoodResultMap">
         SELECT
         <include refid="Base_Column_List"/>
