@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fido.fcnetworksite.dao.RelationDao">
+    <resultMap id="RelationResultMap" type="com.fido.fcnetworksite.entity.RelationEntity">
+        <id column="c_relation_id" property="relationId"/>
+        <result column="c_following_id" property="followingId"/>
+        <result column="c_followed_id" property="followedId"/>
+        <result column="c_following_time" property="followingTime"/>
+        <result column="c_followed_time" property="followedTime"/>
+        <result column="c_status" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    c_relation_id,c_following_id,c_followed_id,c_following_time,c_followed_time,c_status
+  </sql>
+    <select id="getFans" resultMap="RelationResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_relation
+        WHERE c_followed_id = #{followedId}
+    </select>
+    <select id="getFollowingUsers" resultMap="RelationResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_relation
+        WHERE c_following_id = #{followingId}
+    </select>
+    <insert id="insert">
+        INSERT INTO t_relation
+        (`c_following_id`,
+        `c_followed_id`,
+        `c_following_time`)
+        VALUES
+        (
+        #{followingId},
+        #{followedId},
+        #{followingTime}
+        )
+        ON DUPLICATE KEY UPDATE
+        `c_followed_time` = now(),
+        `c_status` = values(status)
+    </insert>
+    <select id="getRelation" resultMap="RelationResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_relation
+        WHERE c_following_id = #{followingId} AND c_followed_id = #{followedId}
+    </select>
+    <delete id="delete">
+        DELETE FROM
+        t_relation
+        WHERE c_following_id = #{followingId} AND c_followed_id = #{followedId}
+    </delete>
+</mapper>
