@@ -1,6 +1,5 @@
 package com.fido.fcnetworksite.entity
 
-import com.fido.fcnetworksite.enum.RelationEnum
 import java.time.LocalDateTime
 
 /**
@@ -12,19 +11,12 @@ class RelationEntity {
     var relationId: Long = 0
     var followingId: Long = 0
     var followedId: Long = 0
-    var followingTime: LocalDateTime = LocalDateTime.now()
-    var followedTime: LocalDateTime = LocalDateTime.now()
-    var status: Int = RelationEnum.UNILATERAL_CONCERN.status
+    var followTime: LocalDateTime = LocalDateTime.now()
 
     constructor()
-    constructor(relationId: Long, followingId: Long, followedId: Long, followingTime: LocalDateTime, followedTime: LocalDateTime, status: Int) {
-        this.relationId = relationId
+
+    constructor(followingId: Long, followedId: Long) {
         this.followingId = followingId
         this.followedId = followedId
-        this.followingTime = followingTime
-        this.followedTime = followedTime
-        this.status = status
     }
-
-
 }

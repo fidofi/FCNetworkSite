@@ -18,7 +18,11 @@ interface RelationDao {
 
     fun insert(relationEntity: RelationEntity)
 
-    fun getRelation(@Param("followingId") followingId: Long, @Param("followedId") followedId: Long):RelationEntity
+    fun getRelation(@Param("followingId") followingId: Long, @Param("followedId") followedId: Long): RelationEntity
 
     fun delete(@Param("followingId") followingId: Long, @Param("followedId") followedId: Long)
+
+    fun countFans(@Param("userId") userId: Long):Long
+
+    fun countFollowing(@Param("userId") userId: Long):Long
 }
