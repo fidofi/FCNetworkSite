@@ -4,6 +4,7 @@ import com.fido.fcnetworksite.AbstractUnitTest
 import com.fido.fcnetworksite.entity.UserEntity
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.redis.core.StringRedisTemplate
 import java.time.LocalDate
 
 /**
@@ -15,6 +16,9 @@ import java.time.LocalDate
 class UserDaoTest : AbstractUnitTest() {
     @Autowired
     lateinit var userDao: UserDao
+
+    @Autowired
+    lateinit var stringRedisTemplate: StringRedisTemplate
 
     @Test
     fun testSaveUser() {
@@ -30,16 +34,19 @@ class UserDaoTest : AbstractUnitTest() {
 
     @Test
     fun testUpdateUserInfo() {
-//        var userEntity: UserEntity = userDao.findUserById(1)
-//        userEntity.nickName = "fido飞飞"
-//        userDao.updateUserInfo(userEntity)
-//
-//    }
+
     }
 
     @Test
     fun testFindByEmail() {
         println(userDao.findUserByEmail("fromwxf@163.com"))
+    }
+
+    @Test
+    fun testRedis() {
+        // 保存字符串
+        stringRedisTemplate.opsForValue().set("aaa", "111")
+
     }
 
 
