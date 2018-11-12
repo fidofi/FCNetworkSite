@@ -4,6 +4,7 @@ import com.fido.fcnetworksite.dao.MoodDao
 import com.fido.fcnetworksite.entity.MoodEntity
 import com.fido.fcnetworksite.service.MoodService
 import com.fido.fcnetworksite.service.PhotoService
+import com.fido.fcnetworksite.service.TimeLineService
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.vo.MoodVo
 import com.fido.fcnetworksite.vo.PageInfoVo
@@ -24,12 +25,15 @@ class MoodServiceImpl : MoodService {
     private lateinit var photoService: PhotoService
     @Autowired
     private lateinit var userService: UserService
+    @Autowired
+    private lateinit var timeLineService: TimeLineService
 
     override fun insertMood(moodVo: MoodVo) {
         val moodEntity = MoodEntity(moodVo.content, moodVo.userId)
         moodDao.insertMood(moodEntity)
         if (moodVo.photoList != null && moodVo.photoList.isNotEmpty())
             photoService.batchInsert(moodEntity.moodId, moodVo.photoList)
+        timeLineService.add(moodEntity.userId, moodEntity.moodId)
     }
 
     override fun selectMoodLikeContent(content: String, pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo> {
@@ -37,11 +41,11 @@ class MoodServiceImpl : MoodService {
         val moodList = moodDao.selectMoodLikeContent(content)
         val total = moodDao.countMoodLikeContent(content)
         val userIdList = moodList.map { it.userId }.toSet().toList()
-        val userNameMap = userService.batchSelectUser(userIdList).associateBy({ it.userId }, { it.nickName }).toMap()
+        val userNameMap = userService.batchSelectUser(userIdList).associateBy({ it.userId }, { it }).toMap()
         val photoMap = photoService.batchSelectByMoodId(moodList.map { it.moodId })
         return PageInfoVo(total, pageIndex, pageSize, moodList.map {
-            MoodVo(it.moodId, it.userId, userNameMap[it.userId]!!,
-                    it.content, it.commentCount, it.likeCount, photoMap[it.moodId])
+            MoodVo(it.moodId, it.userId, userNameMap[it.userId]!!.nickName,
+                    it.content, it.commentCount, it.likeCount, userNameMap[it.userId]!!.photoUrl, photoMap[it.moodId])
         }
         )
     }
@@ -55,16 +59,28 @@ class MoodServiceImpl : MoodService {
         val moodList = moodDao.selectMoodByUserId(userId)
         val total = moodDao.countMoodByUserId(userId)
         val userIdList = moodList.map { it.userId }.toSet().toList()
-        val userNameMap = userService.batchSelectUser(userIdList).associateBy({ it.userId }, { it.nickName }).toMap()
+        val userNameMap = userService.batchSelectUser(userIdList).associateBy({ it.userId }, { it }).toMap()
         val photoMap = photoService.batchSelectByMoodId(moodList.map { it.moodId })
         return PageInfoVo(total, pageIndex, pageSize, moodList.map {
-            MoodVo(it.moodId, it.userId, userNameMap[it.userId]!!,
-                    it.content, it.commentCount, it.likeCount, photoMap[it.moodId])
+            MoodVo(it.moodId, it.userId, userNameMap[it.userId]!!.nickName,
+                    it.content, it.commentCount, it.likeCount, userNameMap[it.userId]!!.photoUrl, photoMap[it.moodId])
         }
         )
     }
 
-    override fun deleteMood(moodId: Int) {
+    override fun deleteMood(userId: Long, moodId: Int) {
         moodDao.deleteMood(moodId)
+        timeLineService.remove(userId, moodId)
+    }
+
+    override fun selectByMoodIdList(moodIdList: List<Int>): List<MoodVo> {
+        val moodList = moodDao.selectByMoodIdList(moodIdList)
+        val userIdList = moodList.map { it.userId }.toSet().toList()
+        val userMap = userService.batchSelectUser(userIdList).map { it.userId to it }.toMap()
+        val photoMap = photoService.batchSelectByMoodId(moodList.map { it.moodId })
+        return moodList.map {
+            MoodVo(it.moodId, it.userId, userMap[it.userId]!!.nickName,
+                    it.content, it.commentCount, it.likeCount, userMap[it.userId]!!.photoUrl, photoMap[it.moodId])
+        }
     }
 }

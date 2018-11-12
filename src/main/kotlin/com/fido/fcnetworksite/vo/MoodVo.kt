@@ -1,6 +1,6 @@
 package com.fido.fcnetworksite.vo
 
-import javax.validation.constraints.NotBlank
+import org.hibernate.validator.constraints.NotBlank
 
 
 /**
@@ -15,4 +15,5 @@ data class MoodVo(
         @NotBlank(message = "内容不能为空") val content: String,
         val commentCount: Long = 0,
         val likeCount: Long = 0,
+        val userPhoto:String="",
         val photoList: List<PhotoVo>?)

@@ -51,4 +51,13 @@
     SET c_is_deleted= 1
     WHERE c_mood_id = #{moodId}
   </update>
+    <select id="selectByMoodIdList" resultMap="MoodResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_mood WHERE c_mood_id IN(
+        <foreach collection="moodIdList" item="moodId" separator=",">
+            #{moodId}
+        </foreach>
+        )AND c_is_deleted= 0
+    </select>
 </mapper>

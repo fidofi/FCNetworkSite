@@ -56,4 +56,10 @@
         COUNT(c_relation_id)
         FROM t_relation WHERE  c_following_id = #{followingId}
     </select>
+    <select id="getAllFollowingIdList">
+        SELECT
+        c_followed_id
+        FROM t_relation
+        WHERE c_following_id = #{userId}
+    </select>
 </mapper>

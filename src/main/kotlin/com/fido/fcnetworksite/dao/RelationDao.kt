@@ -22,7 +22,9 @@ interface RelationDao {
 
     fun delete(@Param("followingId") followingId: Long, @Param("followedId") followedId: Long)
 
-    fun countFans(@Param("userId") userId: Long):Long
+    fun countFans(@Param("userId") userId: Long): Long
 
-    fun countFollowing(@Param("userId") userId: Long):Long
+    fun countFollowing(@Param("userId") userId: Long): Long
+
+    fun getAllFollowingIdList(@Param("userId") userId: Long): List<Long>
 }

@@ -29,4 +29,10 @@ interface RelationService {
      */
 
     fun getFollowingList(userId: Long, pageIndex: Int, pageSize: Int): PageInfoVo<UserBaseInfoVo>
+
+    /**
+     * 获取关注者的所有关注人id,用于feed流展示
+     */
+    fun getAllFollowingIdList(userId: Long): List<Long>
+
 }

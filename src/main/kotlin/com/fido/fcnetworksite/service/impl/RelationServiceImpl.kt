@@ -66,4 +66,8 @@ class RelationServiceImpl : RelationService {
             UserBaseInfoVo(it, userInfoMap[it]!!.nickName, userInfoMap[it]!!.photoUrl, userInfoMap[it]!!.introduction)
         })
     }
+
+    override fun getAllFollowingIdList(userId: Long): List<Long> {
+        return relationDao.getAllFollowingIdList(userId)
+    }
 }

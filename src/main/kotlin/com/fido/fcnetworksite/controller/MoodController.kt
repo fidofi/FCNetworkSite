@@ -33,7 +33,7 @@ class MoodController {
     @DeleteMapping("/{moodId}")
     @ApiOperation(value = "删除心情")
     fun deleteMood(@PathVariable("moodId") moodId: Int): DataMap {
-        moodService.deleteMood(moodId)
+        moodService.deleteMood(UserInfoHolder.userId, moodId)
         return ResponseBuilder.create().ok().build()
     }
 

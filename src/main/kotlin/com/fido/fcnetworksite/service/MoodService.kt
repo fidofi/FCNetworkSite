@@ -20,5 +20,7 @@ interface MoodService {
 
     fun selectMoodByUserId(userId: Long, pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo>
 
-    fun deleteMood(moodId: Int)
+    fun deleteMood(userId: Long, moodId: Int)
+
+    fun selectByMoodIdList(moodIdList: List<Int>): List<MoodVo>
 }
