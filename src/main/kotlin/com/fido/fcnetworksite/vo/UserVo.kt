@@ -4,8 +4,8 @@ import com.fido.fcnetworksite.annotation.SaveUser
 import com.fido.fcnetworksite.annotation.UpdateUser
 import com.fido.fcnetworksite.constant.PhotoConstant.DEFAULT_PHOTO_URL
 import com.fido.fcnetworksite.enum.SexEnum
+import org.hibernate.validator.constraints.NotBlank
 import java.time.LocalDate
-import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 /**

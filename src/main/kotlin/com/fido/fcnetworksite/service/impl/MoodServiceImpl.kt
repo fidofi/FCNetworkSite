@@ -27,8 +27,6 @@ class MoodServiceImpl : MoodService {
     private lateinit var userService: UserService
     @Autowired
     private lateinit var timeLineService: TimeLineService
-    @Autowired
-    private lateinit var
 
     override fun insertMood(moodVo: MoodVo) {
         val moodEntity = MoodEntity(moodVo.content, moodVo.userId)

@@ -14,7 +14,7 @@ import redis.clients.jedis.Tuple
 @Service
 class TimeLineServiceImpl : TimeLineService {
     @Autowired
-    private lateinit var zSetOperations: ZSetOperations<String, Int>
+    private lateinit var zSetOperations: ZSetOperations<String, Any>
     private val TIME_LINE_NAMESPACE = "time_line:"
     private val TIME_LINE_0_NAMESPACE = "time_line_0:"
     override fun add(userId: Long, moodId: Int) {
