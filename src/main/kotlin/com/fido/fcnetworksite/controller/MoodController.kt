@@ -52,4 +52,12 @@ class MoodController {
                            @RequestParam("pageSize") pageSize: Int): DataMap {
         return ResponseBuilder.create().ok().data(moodService.selectMoodLikeContent(content, pageIndex, pageSize)).build()
     }
+
+    /**
+     * 用户点赞
+     */
+    @PostMapping("/like")
+    fun likeMood(@JsonParam("moodId") moodId: Int): DataMap {
+        return ResponseBuilder.create().ok().build()
+    }
 }

@@ -23,4 +23,6 @@ interface MoodService {
     fun deleteMood(userId: Long, moodId: Int)
 
     fun selectByMoodIdList(moodIdList: List<Int>): List<MoodVo>
+
+    fun likeMood(userId: Long, moodId: Int)
 }

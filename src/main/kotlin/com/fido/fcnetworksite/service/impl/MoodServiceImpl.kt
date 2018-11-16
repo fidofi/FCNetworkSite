@@ -27,6 +27,8 @@ class MoodServiceImpl : MoodService {
     private lateinit var userService: UserService
     @Autowired
     private lateinit var timeLineService: TimeLineService
+    @Autowired
+    private lateinit var
 
     override fun insertMood(moodVo: MoodVo) {
         val moodEntity = MoodEntity(moodVo.content, moodVo.userId)
@@ -82,5 +84,8 @@ class MoodServiceImpl : MoodService {
             MoodVo(it.moodId, it.userId, userMap[it.userId]!!.nickName,
                     it.content, it.commentCount, it.likeCount, userMap[it.userId]!!.photoUrl, photoMap[it.moodId])
         }
+    }
+
+    override fun likeMood(userId: Long, moodId: Int) {
     }
 }
