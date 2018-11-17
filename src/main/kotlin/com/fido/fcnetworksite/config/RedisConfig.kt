@@ -1,24 +1,18 @@
 package com.fido.fcnetworksite.config
 
-import org.springframework.data.redis.core.RedisTemplate
-import org.springframework.data.redis.core.ZSetOperations
-import org.springframework.data.redis.core.SetOperations
-import org.springframework.data.redis.core.ListOperations
-import org.springframework.data.redis.core.ValueOperations
-import org.springframework.data.redis.core.HashOperations
-import org.springframework.data.redis.serializer.StringRedisSerializer
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.PropertyAccessor
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
-import org.springframework.data.redis.connection.RedisConnectionFactory
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.CachingConfigurerSupport
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.cache.RedisCacheManager
-import org.springframework.stereotype.Component
+import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.core.*
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.StringRedisSerializer
 
 
 /**
@@ -28,7 +22,7 @@ import org.springframework.stereotype.Component
  */
 @Configuration
 @EnableCaching
-class RedisConfig : CachingConfigurerSupport() {
+open class RedisConfig : CachingConfigurerSupport() {
 
     /**
      * 选择redis作为默认缓存工具
@@ -36,7 +30,7 @@ class RedisConfig : CachingConfigurerSupport() {
      * @return
      */
     @Bean
-    fun cacheManager(redisTemplate: RedisTemplate<*, *>): CacheManager {
+    open fun cacheManager(redisTemplate: RedisTemplate<*, *>): CacheManager {
         return RedisCacheManager(redisTemplate)
     }
 
@@ -46,7 +40,7 @@ class RedisConfig : CachingConfigurerSupport() {
      * @return
      */
     @Bean
-    fun redisTemplate(factory: RedisConnectionFactory): RedisTemplate<String, Any> {
+    open fun redisTemplate(factory: RedisConnectionFactory): RedisTemplate<String, Any> {
 
         val template = RedisTemplate<String, Any>()
         // 配置连接工厂
@@ -82,7 +76,7 @@ class RedisConfig : CachingConfigurerSupport() {
      * @return
      */
     @Bean
-    fun hashOperations(redisTemplate: RedisTemplate<String, Any>): HashOperations<String, String, Any> {
+    open fun hashOperations(redisTemplate: RedisTemplate<String, Any>): HashOperations<String, String, Any> {
         return redisTemplate.opsForHash()
     }
 
@@ -93,7 +87,7 @@ class RedisConfig : CachingConfigurerSupport() {
      * @return
      */
     @Bean
-    fun valueOperations(redisTemplate: RedisTemplate<String, Any>): ValueOperations<String, Any> {
+    open fun valueOperations(redisTemplate: RedisTemplate<String, Any>): ValueOperations<String, Any> {
         return redisTemplate.opsForValue()
     }
 
@@ -104,7 +98,7 @@ class RedisConfig : CachingConfigurerSupport() {
      * @return
      */
     @Bean
-    fun listOperations(redisTemplate: RedisTemplate<String, Any>): ListOperations<String, Any> {
+    open fun listOperations(redisTemplate: RedisTemplate<String, Any>): ListOperations<String, Any> {
         return redisTemplate.opsForList()
     }
 
@@ -115,7 +109,7 @@ class RedisConfig : CachingConfigurerSupport() {
      * @return
      */
     @Bean
-    fun setOperations(redisTemplate: RedisTemplate<String, Any>): SetOperations<String, Any> {
+    open fun setOperations(redisTemplate: RedisTemplate<String, Any>): SetOperations<String, Any> {
         return redisTemplate.opsForSet()
     }
 
@@ -126,7 +120,7 @@ class RedisConfig : CachingConfigurerSupport() {
      * @return
      */
     @Bean
-    fun zSetOperations(redisTemplate: RedisTemplate<String, Any>): ZSetOperations<String, Any> {
+    open fun zSetOperations(redisTemplate: RedisTemplate<String, Any>): ZSetOperations<String, Any> {
         return redisTemplate.opsForZSet()
     }
 }

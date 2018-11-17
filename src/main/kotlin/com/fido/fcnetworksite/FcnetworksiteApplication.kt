@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
  * @date: Created in 17:11 2018/10/11
  */
 @SpringBootApplication
-@MapperScan("com.fido.fcnetworksite.dao")
-class FcnetworksiteApplication
+@MapperScan(value = ["com.fido.fcnetworksite.dao"])
+open  class FcnetworksiteApplication
 
 fun main(args: Array<String>) {
     SpringApplication.run(FcnetworksiteApplication::class.java, *args)
