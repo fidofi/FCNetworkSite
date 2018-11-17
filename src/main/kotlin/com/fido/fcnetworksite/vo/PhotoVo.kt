@@ -5,4 +5,15 @@ package com.fido.fcnetworksite.vo
  * @desription:
  * @date: Created in 18:32 2018/11/2
  */
-data class PhotoVo(val photoUrl: String, val order: Int)
+class PhotoVo {
+    var photoUrl: String = ""
+    var order: Int = 0
+
+    constructor()
+    constructor(photoUrl: String, order: Int) {
+        this.photoUrl = photoUrl
+        this.order = order
+    }
+
+
+}

@@ -144,24 +144,26 @@ public class JsonUtils {
         return list;
     }
 
-  public static <T> List<T> jsonToList(Object any, Class<T> clazz) {
-    List<T> list = Collections.emptyList();
+    public static <T> List<T> jsonToList(Object any, Class<T> clazz) {
+        List<T> list = Collections.emptyList();
 
-    String jsonStr = binder.toJson(any);
+        String jsonStr = binder.toJson(any);
 
-    if (StringUtils.isBlank(jsonStr)) {
-      return list;
+        if (StringUtils.isBlank(jsonStr)) {
+            return list;
+        }
+
+        try {
+            JavaType type =
+                    binder.getMapper()
+                            .getTypeFactory()
+                            .constructParametrizedType(ArrayList.class, List.class, clazz);
+            list = binder.getMapper().readValue(jsonStr, type);
+        } catch (Exception ex) {
+            logger.error("json反序列化失败", ex);
+        }
+        return list;
     }
-
-    try {
-      JavaType type = binder.getMapper().getTypeFactory()
-              .constructParametrizedType(ArrayList.class, List.class, clazz);
-      list = binder.getMapper().readValue(jsonStr, type);
-    } catch (Exception ex) {
-      logger.error("json反序列化失败", ex);
-    }
-    return list;
-  }
 
     public static <T> T beanToBean(Object any, Class<T> clazz) {
         String jsonStr = binder.toJson(any);

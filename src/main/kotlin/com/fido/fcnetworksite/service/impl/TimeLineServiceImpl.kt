@@ -19,7 +19,7 @@ class TimeLineServiceImpl : TimeLineService {
     private val TIME_LINE_0_NAMESPACE = "time_line_0:"
     override fun add(userId: Long, moodId: Int) {
         val key = buildKey(userId)
-        zSetOperations.add(key, moodId, System.currentTimeMillis() as Double)
+        zSetOperations.add(key, moodId, System.currentTimeMillis().toDouble())
         val size = zSetOperations.zCard(key)
         val MAX_NUM: Long = 100
         if (size > MAX_NUM) {
