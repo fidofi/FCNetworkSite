@@ -200,7 +200,7 @@
                             <archive>
                                 <manifest>
                                     <!--suppress UnresolvedMavenProperty -->
-                                    <mainClass>${com.fido.fcnetworksite.FcnetworksiteApplication}</mainClass>
+                                    <mainClass>com.fido.fcnetworksite.FcnetworksiteApplication</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
