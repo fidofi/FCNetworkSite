@@ -1,9 +1,9 @@
 package com.fido.fcnetworksite.controller
 
 import com.fido.fcnetworksite.base.DataMap
-import com.fido.fcnetworksite.resolver.JsonParam
 import com.fido.fcnetworksite.service.RelationService
 import com.fido.fcnetworksite.util.ResponseBuilder
+import com.fido.fcnetworksite.vo.RelationVo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -22,9 +22,8 @@ class RelationController {
      * 关注某人
      */
     @PostMapping("/follow")
-    fun followSomeOne(@JsonParam("followingId") followingId: Long,
-                      @JsonParam("followedId") followedId: Long): DataMap {
-        relationService.followSomeOne(followingId, followedId)
+    fun followSomeOne(@RequestBody relationVo: RelationVo): DataMap {
+        relationService.followSomeOne(relationVo.followingId, relationVo.followedId)
         return ResponseBuilder.create().ok().build()
     }
 
@@ -32,9 +31,8 @@ class RelationController {
      * 取关某人
      */
     @PostMapping("/unfollow")
-    fun unFollowSomeOne(@JsonParam("followingId") followingId: Long,
-                        @JsonParam("followedId") followedId: Long): DataMap {
-        relationService.unFollowSomeOne(followingId, followedId)
+    fun unFollowSomeOne(@RequestBody relationVo: RelationVo): DataMap {
+        relationService.unFollowSomeOne(relationVo.followingId, relationVo.followedId)
         return ResponseBuilder.create().ok().build()
     }
 

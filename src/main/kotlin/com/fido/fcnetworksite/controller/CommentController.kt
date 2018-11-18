@@ -1,7 +1,6 @@
 package com.fido.fcnetworksite.controller
 
 import com.fido.fcnetworksite.base.DataMap
-import com.fido.fcnetworksite.resolver.JsonParam
 import com.fido.fcnetworksite.service.CommentService
 import com.fido.fcnetworksite.util.ResponseBuilder
 import com.fido.fcnetworksite.util.UserInfoHolder
@@ -23,9 +22,8 @@ class CommentController {
 
     @PostMapping
     @ApiOperation(value = "发表评论")
-    fun insertComment(@JsonParam("content") content: String,
-                      @JsonParam("moodId") moodId: Int): DataMap {
-        commentService.insert(CommentVo(moodId, content, UserInfoHolder.userId))
+    fun insertComment(@RequestBody comment: CommentVo): DataMap {
+        commentService.insert(CommentVo(comment.moodId, comment.content, UserInfoHolder.userId))
         return ResponseBuilder.create().ok().build()
     }
 

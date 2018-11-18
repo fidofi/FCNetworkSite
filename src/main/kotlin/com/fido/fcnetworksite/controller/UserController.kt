@@ -6,11 +6,12 @@ import com.fido.fcnetworksite.base.DataMap
 import com.fido.fcnetworksite.constant.PrefixConstant
 import com.fido.fcnetworksite.enum.StatusEnum
 import com.fido.fcnetworksite.exception.BaseException
-import com.fido.fcnetworksite.resolver.JsonParam
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.ResponseBuilder
 import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.util.ValidatorUtils
+import com.fido.fcnetworksite.vo.LoginVo
+import com.fido.fcnetworksite.vo.UpdatePasswordVo
 import com.fido.fcnetworksite.vo.UserVo
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiImplicitParam
@@ -48,10 +49,9 @@ class UserController {
     @ApiImplicitParams(ApiImplicitParam(dataType = "String", name = "email", value = "邮件地址", required = true),
             ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true))
     @PostMapping("/login")
-    fun login(@JsonParam("email") email: String,
-              @JsonParam("password") password: String,
+    fun login(@RequestBody loginVo: LoginVo,
               request: HttpServletRequest): DataMap {
-        userService.login(email, password)
+        userService.login(loginVo.email, loginVo.password)
         request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, UserInfoHolder.userInfo)
         return ResponseBuilder.create().ok().build()
     }
@@ -65,10 +65,8 @@ class UserController {
 
     @ApiOperation(value = "更改用户密码")
     @PutMapping("/password")
-    fun updatePassword(@JsonParam("email") email: String,
-                       @JsonParam("oldPassword") oldPassword: String,
-                       @JsonParam("newPassword") newPassword: String): DataMap {
-        userService.updateUserPassword(email, newPassword, oldPassword)
+    fun updatePassword(@RequestBody updatePasswordVo: UpdatePasswordVo): DataMap {
+        userService.updateUserPassword(updatePasswordVo.email, updatePasswordVo.newPassword, updatePasswordVo.oldPassword)
         return ResponseBuilder.create().ok().build()
     }
 
