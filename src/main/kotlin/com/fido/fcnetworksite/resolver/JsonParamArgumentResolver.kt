@@ -4,6 +4,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fido.fcnetworksite.enum.StatusEnum
 import com.fido.fcnetworksite.exception.BaseException
 import com.fido.fcnetworksite.util.JsonUtils
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.core.MethodParameter
 import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
@@ -24,6 +26,7 @@ const val JSON_REQUEST_BODY = "JSON_REQUEST_BODY"
 class JsonParamArgumentResolver : HandlerMethodArgumentResolver {
     val objectMapper = jacksonObjectMapper()
 
+    private val logger: Logger = LoggerFactory.getLogger(JsonParamArgumentResolver::class.java)
     override fun supportsParameter(parameter: MethodParameter?): Boolean {
         return parameter!!.hasParameterAnnotation(JsonParam::class.java)
     }
@@ -55,7 +58,9 @@ class JsonParamArgumentResolver : HandlerMethodArgumentResolver {
         if (jsonBodyObj == null) {
             try {
                 val jsonBody = servletRequest.reader.lines().collect(Collectors.joining(System.lineSeparator()))
+                logger.info("jsonbody为:{}", jsonBody)
                 jsonBodyObj = JsonUtils.jsonToMap(jsonBody)
+                logger.info("jsonobj为:{}", jsonBodyObj)
                 servletRequest.setAttribute(JSON_REQUEST_BODY, jsonBodyObj)
             } catch (e: IOException) {
                 throw RuntimeException(e)

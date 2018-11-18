@@ -48,11 +48,11 @@ class UserController {
     @ApiImplicitParams(ApiImplicitParam(dataType = "String", name = "email", value = "邮件地址", required = true),
             ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true))
     @PostMapping("/login")
-    fun login(@JsonParam("email") email: String?,
-              @JsonParam("password") password: String?,
-              request: HttpServletRequest?): DataMap {
-        userService.login(email!!, password!!)
-        request!!.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, UserInfoHolder.userInfo)
+    fun login(@JsonParam("email") email: String,
+              @JsonParam("password") password: String,
+              request: HttpServletRequest): DataMap {
+        userService.login(email, password)
+        request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, UserInfoHolder.userInfo)
         return ResponseBuilder.create().ok().build()
     }
 
