@@ -1,12 +1,10 @@
 package com.fido.fcnetworksite.controller
 
 import com.fido.fcnetworksite.base.DataMap
-import com.fido.fcnetworksite.resolver.JsonParam
 import com.fido.fcnetworksite.service.MoodService
 import com.fido.fcnetworksite.util.ResponseBuilder
 import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.vo.MoodVo
-import com.fido.fcnetworksite.vo.PhotoVo
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -24,9 +22,8 @@ class MoodController {
 
     @PostMapping()
     @ApiOperation(value = "发布心情")
-    fun createMood(@JsonParam(value = "content") content: String,
-                   @JsonParam(value = "photoUrlList", required = false, list = true, rawType = PhotoVo::class) photoUrlList: List<PhotoVo>): DataMap {
-        moodService.insertMood(MoodVo(content = content, photoList = photoUrlList, userId = UserInfoHolder.userId))
+    fun createMood(@RequestBody moodVo: MoodVo): DataMap {
+        moodService.insertMood(MoodVo(content = moodVo.content, photoList = moodVo.photoList, userId = UserInfoHolder.userId))
         return ResponseBuilder.create().ok().build()
     }
 
@@ -57,7 +54,7 @@ class MoodController {
      * 用户点赞
      */
     @PostMapping("/like")
-    fun likeMood(@JsonParam("moodId") moodId: Int): DataMap {
+    fun likeMood(@RequestBody moodVo: MoodVo): DataMap {
         return ResponseBuilder.create().ok().build()
     }
 }
