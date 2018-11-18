@@ -36,6 +36,7 @@ class JsonParamArgumentResolver : HandlerMethodArgumentResolver {
         val annotation = parameter.getParameterAnnotation(JsonParam::class.java)
         val paramName = if (annotation.value.isNotEmpty()) annotation.value else parameter.parameterName
         val jsonObj = getRequestBody(webRequest!!)
+        logger.info("jsonObj1:{}",jsonObj)
         if (annotation.required && jsonObj?.containsKey(paramName) != true) {
             throw JsonParamMissingException(paramName)
         }

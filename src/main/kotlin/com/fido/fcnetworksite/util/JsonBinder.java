@@ -5,7 +5,6 @@ package com.fido.fcnetworksite.util;
  * @date: 2018/10/27 20:48
  * @description:
  */
-
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,11 +15,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 
-/**
- * Jackson简单封装,json mapper.
- *
- * @author Seewo software - Marco.hu(huzhiguo@cvte.cn)
- */
+/** Jackson简单封装,json mapper. */
 public class JsonBinder {
 
     private static Logger logger = LoggerFactory.getLogger(JsonBinder.class);

@@ -127,11 +127,9 @@ public class JsonUtils {
      */
     public static <T> List<T> jsonToList(String jsonStr, Class<T> clazz) {
         List<T> list = Collections.emptyList();
-
         if (StringUtils.isBlank(jsonStr)) {
             return list;
         }
-
         try {
             JavaType type =
                     binder.getMapper()
@@ -146,13 +144,10 @@ public class JsonUtils {
 
     public static <T> List<T> jsonToList(Object any, Class<T> clazz) {
         List<T> list = Collections.emptyList();
-
         String jsonStr = binder.toJson(any);
-
         if (StringUtils.isBlank(jsonStr)) {
             return list;
         }
-
         try {
             JavaType type =
                     binder.getMapper()
@@ -167,11 +162,9 @@ public class JsonUtils {
 
     public static <T> T beanToBean(Object any, Class<T> clazz) {
         String jsonStr = binder.toJson(any);
-
         if (StringUtils.isBlank(jsonStr)) {
             return null;
         }
-
         return jsonToBean(jsonStr, clazz);
     }
 }
