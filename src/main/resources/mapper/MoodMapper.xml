@@ -58,6 +58,7 @@
         <foreach collection="moodIdList" item="moodId" separator=",">
             #{moodId}
         </foreach>
-        )AND c_is_deleted= 0
+        )
+        AND c_is_deleted= 0
     </select>
 </mapper>

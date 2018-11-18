@@ -48,15 +48,15 @@
     <select id="countFans" resultType="java.lang.Long">
         SELECT
         COUNT(c_relation_id)
-        FROM t_relation WHERE c_followed_id = #{followedId}
+        FROM t_relation WHERE c_followed_id = #{userId}
     </select>
 
     <select id="countFollowing" resultType="java.lang.Long">
         SELECT
         COUNT(c_relation_id)
-        FROM t_relation WHERE  c_following_id = #{followingId}
+        FROM t_relation WHERE  c_following_id = #{userId}
     </select>
-    <select id="getAllFollowingIdList">
+    <select id="getAllFollowingIdList" resultType="java.lang.Long">
         SELECT
         c_followed_id
         FROM t_relation

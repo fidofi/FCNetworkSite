@@ -16,7 +16,7 @@ interface UserService {
 
     fun freezeUser(userId: Long)
 
-    fun login(email: String, password: String)
+    fun login(email: String, password: String): UserVo
 
     fun unFreezeUser(userId: Long)
 

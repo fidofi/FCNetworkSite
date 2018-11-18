@@ -56,6 +56,7 @@ class MoodController {
      */
     @PostMapping("/like")
     fun likeMood(@RequestBody moodVo: MoodVo): DataMap {
+        moodService.likeMood(UserInfoHolder.userId, moodVo.moodId)
         return ResponseBuilder.create().ok().build()
     }
 }

@@ -45,7 +45,6 @@ class RelationServiceImpl : RelationService {
         val relationList = relationDao.getFans(userId)
         val total = relationDao.countFans(userId)
         var userIdList = relationList.map { it.followingId }.toMutableList()
-        userIdList.add(userId)
         val userInfoMap = userService.batchSelectUser(userIdList).map { it.userId to it }.toMap()
         return PageInfoVo(total, pageIndex, pageSize, userIdList.map {
             UserBaseInfoVo(it, userInfoMap[it]!!.nickName, userInfoMap[it]!!.photoUrl, userInfoMap[it]!!.introduction)
@@ -58,9 +57,11 @@ class RelationServiceImpl : RelationService {
     override fun getFollowingList(userId: Long, pageIndex: Int, pageSize: Int): PageInfoVo<UserBaseInfoVo> {
         PageHelper.startPage<RelationEntity>(pageIndex, pageSize)
         val relationList = relationDao.getFollowingUsers(userId)
+        if (relationList.isEmpty()) {
+            return PageInfoVo(0, pageIndex, pageSize, emptyList())
+        }
         val total = relationDao.countFollowing(userId)
         var userIdList = relationList.map { it.followingId }.toMutableList()
-        userIdList.add(userId)
         val userInfoMap = userService.batchSelectUser(userIdList).map { it.userId to it }.toMap()
         return PageInfoVo(total, pageIndex, pageSize, userIdList.map {
             UserBaseInfoVo(it, userInfoMap[it]!!.nickName, userInfoMap[it]!!.photoUrl, userInfoMap[it]!!.introduction)

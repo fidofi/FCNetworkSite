@@ -10,6 +10,7 @@ import com.fido.fcnetworksite.vo.MoodVo
 import com.fido.fcnetworksite.vo.PageInfoVo
 import com.github.pagehelper.PageHelper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.redis.core.ListOperations
 import org.springframework.stereotype.Service
 
 /**
@@ -27,12 +28,16 @@ class MoodServiceImpl : MoodService {
     private lateinit var userService: UserService
     @Autowired
     private lateinit var timeLineService: TimeLineService
+    @Autowired
+    private lateinit var listOperations: ListOperations<String, Any>
 
+    private val LIKE_PREFIX = "like_mood:"
     override fun insertMood(moodVo: MoodVo) {
         val moodEntity = MoodEntity(moodVo.content, moodVo.userId)
         moodDao.insertMood(moodEntity)
-        if (moodVo.photoList != null && moodVo.photoList.isNotEmpty())
+        if (moodVo.photoList != null && moodVo.photoList.isNotEmpty()) {
             photoService.batchInsert(moodEntity.moodId, moodVo.photoList)
+        }
         timeLineService.add(moodEntity.userId, moodEntity.moodId)
     }
 
@@ -74,6 +79,9 @@ class MoodServiceImpl : MoodService {
     }
 
     override fun selectByMoodIdList(moodIdList: List<Int>): List<MoodVo> {
+        if (moodIdList.isEmpty()) {
+            return emptyList()
+        }
         val moodList = moodDao.selectByMoodIdList(moodIdList)
         val userIdList = moodList.map { it.userId }.toSet().toList()
         val userMap = userService.batchSelectUser(userIdList).map { it.userId to it }.toMap()
@@ -84,6 +92,11 @@ class MoodServiceImpl : MoodService {
         }
     }
 
+    /**
+     * 点赞
+     */
     override fun likeMood(userId: Long, moodId: Int) {
+        val key = LIKE_PREFIX + moodId
+        listOperations.rightPush(key, userId)
     }
 }

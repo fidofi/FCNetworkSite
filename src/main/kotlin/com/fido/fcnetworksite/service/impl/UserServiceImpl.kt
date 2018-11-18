@@ -13,9 +13,7 @@ import com.fido.fcnetworksite.util.SaltUtils
 import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.vo.UserVo
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpRequest
 import org.springframework.stereotype.Service
-import javax.servlet.http.HttpServletRequest
 
 /**
  * @author: wangxianfei
@@ -64,7 +62,7 @@ class UserServiceImpl : UserService {
         }
     }
 
-    override fun login(email: String, password: String) {
+    override fun login(email: String, password: String):UserVo {
         val user = userDao.findUserByEmail(email) ?: throw UserException(StatusEnum.USER_NOT_EXIST)
         val transferPassword = MD5Util.encrypt(password + user.salt)
         if (transferPassword != user.password) {
@@ -72,8 +70,8 @@ class UserServiceImpl : UserService {
         }
         //登陆成功,存储用户信息
         val userVo = UserVo(user.userId, user.email, user.nickName, user.sex.code, user.birthday, user.photoUrl, user.introduction)
-
         UserInfoHolder.initLocal(userVo)
+        return userVo
     }
 
     override fun freezeUser(userId: Long) {

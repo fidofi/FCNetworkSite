@@ -60,7 +60,6 @@ open class RedisConfig : CachingConfigurerSupport() {
         template.valueSerializer = jacksonSeial
         //使用StringRedisSerializer来序列化和反序列化redis的key值
         template.keySerializer = StringRedisSerializer()
-
         // 设置hash key 和value序列化模式
         template.hashKeySerializer = StringRedisSerializer()
         template.hashValueSerializer = jacksonSeial

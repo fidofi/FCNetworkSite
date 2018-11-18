@@ -5,6 +5,7 @@ import com.fido.fcnetworksite.entity.UserEntity
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.StringRedisTemplate
+import org.springframework.data.redis.core.ZSetOperations
 import java.time.LocalDate
 
 /**
@@ -19,6 +20,8 @@ class UserDaoTest : AbstractUnitTest() {
 
     @Autowired
     lateinit var stringRedisTemplate: StringRedisTemplate
+    @Autowired
+    private lateinit var zSetOperations: ZSetOperations<String, Any>
 
     @Test
     fun testSaveUser() {
@@ -46,6 +49,7 @@ class UserDaoTest : AbstractUnitTest() {
     fun testRedis() {
         // 保存字符串
         stringRedisTemplate.opsForValue().set("aaa", "111")
+        zSetOperations.add("1", 1, 1.0)
 
     }
 

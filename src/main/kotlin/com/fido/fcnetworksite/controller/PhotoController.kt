@@ -3,6 +3,7 @@ package com.fido.fcnetworksite.controller
 import com.fido.fcnetworksite.base.DataMap
 import com.fido.fcnetworksite.service.PhotoService
 import com.fido.fcnetworksite.util.ResponseBuilder
+import com.fido.fcnetworksite.util.UserInfoHolder
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -25,6 +26,6 @@ class PhotoController {
     @PostMapping("/upload")
     @ApiOperation("图片上传")
     fun upload(@RequestParam(value = "photo") photo: MultipartFile): DataMap {
-        return ResponseBuilder.create().ok().data(photoService.uploadPhotos(1, photo)).build()
+        return ResponseBuilder.create().ok().data(photoService.uploadPhotos(UserInfoHolder.userId, photo)).build()
     }
 }

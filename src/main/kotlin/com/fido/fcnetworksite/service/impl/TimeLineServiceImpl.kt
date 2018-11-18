@@ -4,7 +4,6 @@ import com.fido.fcnetworksite.service.TimeLineService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.ZSetOperations
 import org.springframework.stereotype.Service
-import redis.clients.jedis.Tuple
 
 /**
  * @author: Fido Wang (fromwxf@gmail.com)
@@ -44,10 +43,10 @@ class TimeLineServiceImpl : TimeLineService {
         val size = zSetOperations.zCard(key0)
         zSetOperations.removeRange(key0, 0, size - MAX_NUM)
 
-        val list = zSetOperations.rangeWithScores(key0, 0, -1) as ArrayList<Tuple>
+        val list = zSetOperations.rangeWithScores(key0, 0, -1).toMutableList()
         list.sortWith(compareBy { it.score })
         val res = mutableListOf<Int>()
-        list.forEach { res.add(Integer.valueOf(it.element)) }
+        list.forEach { res.add(it.value as Int) }
         return res
     }
 

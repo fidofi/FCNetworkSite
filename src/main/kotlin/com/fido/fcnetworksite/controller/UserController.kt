@@ -52,9 +52,9 @@ class UserController {
     @PostMapping("/login")
     fun login(@RequestBody loginVo: LoginVo,
               request: HttpServletRequest): DataMap {
-        userService.login(loginVo.email, loginVo.password)
+        val userVo = userService.login(loginVo.email, loginVo.password)
         request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, UserInfoHolder.userInfo)
-        return ResponseBuilder.create().ok().build()
+        return ResponseBuilder.create().ok().data(userVo).build()
     }
 
     @ApiOperation(value = "更改用户基本信息")
