@@ -33,12 +33,13 @@ class TimeLineServiceImpl : TimeLineService {
             val sets = zSetOperations.rangeByScoreWithScores(key0, -1.0, -1.0)
             sets.forEach { lastTime = it.score }
         }
-        followingList.forEach {
+        val followingListAndMySelf = followingList.toMutableList()
+        followingListAndMySelf.add(userId)
+        followingListAndMySelf.forEach {
             val key = buildKey(it)
             val sets = zSetOperations.rangeByScoreWithScores(key, lastTime, Double.MAX_VALUE)
             sets.forEach { zSetOperations.add(key0, it.value, it.score) }
         }
-
         val MAX_NUM = 20
         val size = zSetOperations.zCard(key0)
         zSetOperations.removeRange(key0, 0, size - MAX_NUM)

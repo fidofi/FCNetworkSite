@@ -13,6 +13,4 @@ interface TimeLineService {
     fun getFollow(userId: Long, followingList: List<Long>): List<Int>
 
     fun remove(userId: Long, moodId: Int)
-
-
 }

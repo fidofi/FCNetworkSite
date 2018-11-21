@@ -3,6 +3,7 @@ package com.fido.fcnetworksite.service.impl
 import com.fido.fcnetworksite.dao.RelationDao
 import com.fido.fcnetworksite.entity.RelationEntity
 import com.fido.fcnetworksite.service.RelationService
+import com.fido.fcnetworksite.service.TimeLineService
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.vo.PageInfoVo
 import com.fido.fcnetworksite.vo.UserBaseInfoVo
@@ -22,6 +23,8 @@ class RelationServiceImpl : RelationService {
     private lateinit var relationDao: RelationDao
     @Autowired
     private lateinit var userService: UserService
+    @Autowired
+    private lateinit var timeLineService: TimeLineService
 
     /**
      * 关注某人

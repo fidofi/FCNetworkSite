@@ -27,6 +27,9 @@ class CommentServiceImpl : CommentService {
 
     override fun select(moodId: Int): List<CommentVo> {
         val commentList = commentDao.select(moodId)
+        if (commentList.isNullOrEmpty()) {
+            return emptyList()
+        }
         val userIdList = commentList.map { it.userId }
         val userNameMap = userService.batchSelectUser(userIdList).map { it.userId to it.nickName }.toMap()
         return commentDao.select(moodId).map { CommentVo(moodId, it.content, it.userId, it.commentId, userNameMap[it.userId]!!, it.createTime) }

@@ -22,7 +22,7 @@ class HomePageController {
     @Autowired
     private lateinit var homePageService: HomePageService
 
-    @GetMapping("")
+    @GetMapping()
     fun getHomePage(): DataMap {
         return ResponseBuilder.create().ok().data(homePageService.getHomePage(UserInfoHolder.userId)).build()
     }
