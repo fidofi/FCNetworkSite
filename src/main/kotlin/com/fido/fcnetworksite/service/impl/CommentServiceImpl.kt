@@ -6,6 +6,7 @@ import com.fido.fcnetworksite.service.CommentService
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.vo.CommentVo
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.redis.core.ValueOperations
 import org.springframework.stereotype.Service
 
 /**
@@ -19,15 +20,18 @@ class CommentServiceImpl : CommentService {
     private lateinit var commentDao: CommentDao
     @Autowired
     private lateinit var userService: UserService
+    @Autowired
+    private lateinit var valueOperations:ValueOperations<String,Any>
 
     override fun insert(commentVo: CommentVo) {
+        valueOperations.increment(commentVo.moodId.toString(),1)
         commentDao.insert(CommentEntity(commentVo.content, commentVo.moodId, commentVo.userId))
 
     }
 
     override fun select(moodId: Int): List<CommentVo> {
         val commentList = commentDao.select(moodId)
-        if (commentList.isNullOrEmpty()) {
+        if (commentList.isEmpty()) {
             return emptyList()
         }
         val userIdList = commentList.map { it.userId }
