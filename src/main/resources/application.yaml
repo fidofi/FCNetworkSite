@@ -19,6 +19,7 @@ mybatis:
   type-aliases-package: com.fido.fcnetworksite.entity  # 注意：对应实体类的路径
 server:
   context-path: "/fcnetworksite"
+  port: 8060
 
 pagehelper:
   helperDialect=mysql
