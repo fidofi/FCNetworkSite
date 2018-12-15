@@ -25,4 +25,6 @@ interface MoodService {
     fun selectByMoodIdList(moodIdList: List<Int>): List<MoodVo>
 
     fun likeMood(userId: Long, moodId: Int)
+
+    fun selectPopularMoodList(pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo>
 }

@@ -10,7 +10,6 @@ import com.fido.fcnetworksite.exception.UserException
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.MD5Util
 import com.fido.fcnetworksite.util.SaltUtils
-import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.vo.UserVo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -62,7 +61,7 @@ class UserServiceImpl : UserService {
         }
     }
 
-    override fun login(email: String, password: String):UserVo {
+    override fun login(email: String, password: String): UserVo {
         val user = userDao.findUserByEmail(email) ?: throw UserException(StatusEnum.USER_NOT_EXIST)
         val transferPassword = MD5Util.encrypt(password + user.salt)
         if (transferPassword != user.password) {
@@ -70,7 +69,6 @@ class UserServiceImpl : UserService {
         }
         //登陆成功,存储用户信息
         val userVo = UserVo(user.userId, user.email, user.nickName, user.sex.code, user.birthday, user.photoUrl, user.introduction)
-        UserInfoHolder.initLocal(userVo)
         return userVo
     }
 
@@ -106,7 +104,7 @@ class UserServiceImpl : UserService {
     }
 
     override fun batchSelectUser(userIdList: List<Long>): List<UserVo> {
-        if(userIdList.isNotEmpty()) {
+        if (userIdList.isNotEmpty()) {
             return userDao.batchListUser(userIdList).map { UserVo(it.userId, it.email, it.nickName, it.sex.code, it.birthday, it.photoUrl, it.introduction) }
         } else {
             return emptyList()

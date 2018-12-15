@@ -25,7 +25,7 @@ class RelationController {
      */
     @PostMapping("/follow")
     fun followSomeOne(@RequestBody relationVo: RelationVo): DataMap {
-        relationService.followSomeOne(UserInfoHolder.userId, relationVo.followedId)
+        relationService.followSomeOne(UserInfoHolder.userVo.userId, relationVo.followedId)
         return ResponseBuilder.create().ok().build()
     }
 
@@ -34,7 +34,7 @@ class RelationController {
      */
     @PostMapping("/unfollow")
     fun unFollowSomeOne(@RequestBody relationVo: RelationVo): DataMap {
-        relationService.unFollowSomeOne(UserInfoHolder.userId, relationVo.followedId)
+        relationService.unFollowSomeOne(UserInfoHolder.userVo.userId, relationVo.followedId)
         return ResponseBuilder.create().ok().build()
     }
 

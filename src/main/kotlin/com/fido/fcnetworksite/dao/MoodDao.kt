@@ -28,4 +28,12 @@ interface MoodDao {
     fun deleteMood(@Param("moodId") moodId: Int)
 
     fun selectByMoodIdList(@Param("moodIdList") moodIdList: List<Int>): List<MoodEntity>
+
+    fun batchUpdateMoodInfo(@Param("entities") moodList: List<MoodEntity>)
+
+    fun selectPopularMoodList(@Param("commentCount") commentCount: Long,
+                              @Param("likeCount") likeCount: Long): List<MoodEntity>
+
+    fun countPopularMood(@Param("commentCount") commentCount: Long,
+                         @Param("likeCount") likeCount: Long): Long
 }

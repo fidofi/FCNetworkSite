@@ -24,14 +24,14 @@ class MoodController {
     @PostMapping()
     @ApiOperation(value = "发布心情")
     fun createMood(@RequestBody moodVo: MoodVo): DataMap {
-        moodService.insertMood(MoodVo(content = moodVo.content, photoList = moodVo.photoList, userId = UserInfoHolder.userId))
+        moodService.insertMood(MoodVo(content = moodVo.content, photoList = moodVo.photoList, userId = UserInfoHolder.userVo.userId))
         return ResponseBuilder.create().ok().build()
     }
 
     @DeleteMapping("/{moodId}")
     @ApiOperation(value = "删除心情")
     fun deleteMood(@PathVariable("moodId") moodId: Int): DataMap {
-        moodService.deleteMood(UserInfoHolder.userId, moodId)
+        moodService.deleteMood(UserInfoHolder.userVo.userId, moodId)
         return ResponseBuilder.create().ok().build()
     }
 
@@ -56,7 +56,13 @@ class MoodController {
      */
     @PostMapping("/like")
     fun likeMood(@RequestBody moodVo: MoodVo): DataMap {
-        moodService.likeMood(UserInfoHolder.userId, moodVo.moodId)
+        moodService.likeMood(UserInfoHolder.userVo.userId, moodVo.moodId)
         return ResponseBuilder.create().ok().build()
+    }
+
+    @GetMapping("/popular")
+    fun getPopular(@RequestParam("pageIndex") pageIndex: Int,
+                   @RequestParam("pageSize") pageSize: Int): DataMap {
+        return ResponseBuilder.create().ok().data(moodService.selectPopularMoodList(pageIndex, pageSize)).build()
     }
 }

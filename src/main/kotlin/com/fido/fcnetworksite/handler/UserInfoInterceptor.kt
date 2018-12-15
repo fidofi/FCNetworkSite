@@ -1,8 +1,6 @@
 package com.fido.fcnetworksite.handler
 
-import com.fido.fcnetworksite.constant.PrefixConstant
 import com.fido.fcnetworksite.util.UserInfoHolder
-import com.fido.fcnetworksite.vo.UserVo
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -22,10 +20,10 @@ class UserInfoInterceptor : HandlerInterceptorAdapter() {
         }
         val session = request.session
         //会话暂未失效
-        if (session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX) != null) {
-            if (UserInfoHolder.userInfo == null) {
-                UserInfoHolder.initLocal(session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX) as UserVo)
-            }
+        if (UserInfoHolder.userVo != null) {
+//            if (UserInfoHolder.userInfo == null) {
+//                UserInfoHolder.initLocal(session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX) as UserVo)
+//            }
             return true
         }
         return false

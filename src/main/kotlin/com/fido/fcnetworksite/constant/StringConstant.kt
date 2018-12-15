@@ -13,8 +13,12 @@ object PhotoConstant {
     const val PHOTO_URL_PREFIX = "$IP/images/"
     //默认的图片地址
     const val DEFAULT_PHOTO_URL = PHOTO_URL_PREFIX + "default.jpg"
+
 }
 
 object PrefixConstant {
     const val SESSION_INFO_PREFIX = "userInfo"
 }
+
+const val LIKE_PREFIX = "like_mood:"
+const val COMMENT_PREFIX = "comment_mood:"

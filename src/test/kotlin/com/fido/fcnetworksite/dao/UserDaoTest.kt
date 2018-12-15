@@ -1,9 +1,11 @@
 package com.fido.fcnetworksite.dao
 
 import com.fido.fcnetworksite.AbstractUnitTest
+import com.fido.fcnetworksite.constant.LIKE_PREFIX
 import com.fido.fcnetworksite.entity.UserEntity
 import org.junit.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.data.redis.core.ZSetOperations
 import java.time.LocalDate
@@ -17,7 +19,8 @@ import java.time.LocalDate
 class UserDaoTest : AbstractUnitTest() {
     @Autowired
     lateinit var userDao: UserDao
-
+    @Autowired
+    private lateinit var redisTemplate: RedisTemplate<String,Any>
     @Autowired
     lateinit var stringRedisTemplate: StringRedisTemplate
     @Autowired
@@ -37,7 +40,7 @@ class UserDaoTest : AbstractUnitTest() {
 
     @Test
     fun testUpdateUserInfo() {
-
+        println(redisTemplate.keys(LIKE_PREFIX+"*"))
     }
 
     @Test
@@ -51,6 +54,11 @@ class UserDaoTest : AbstractUnitTest() {
         stringRedisTemplate.opsForValue().set("aaa", "111")
         zSetOperations.add("1", 1, 1.0)
 
+    }
+
+    @Test
+    fun testSelectUser() {
+        println(userDao.batchListUser(listOf(1)))
     }
 
 

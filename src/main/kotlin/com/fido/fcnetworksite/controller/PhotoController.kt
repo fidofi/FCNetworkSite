@@ -26,6 +26,6 @@ class PhotoController {
     @PostMapping("/upload")
     @ApiOperation("图片上传")
     fun upload(@RequestParam(value = "photo") photo: MultipartFile): DataMap {
-        return ResponseBuilder.create().ok().data(photoService.uploadPhotos(UserInfoHolder.userId, photo)).build()
+        return ResponseBuilder.create().ok().data(photoService.uploadPhotos(UserInfoHolder.userVo.userId, photo)).build()
     }
 }

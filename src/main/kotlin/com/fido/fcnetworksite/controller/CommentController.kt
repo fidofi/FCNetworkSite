@@ -24,7 +24,7 @@ class CommentController {
     @PostMapping
     @ApiOperation(value = "发表评论")
     fun insertComment(@RequestBody comment: CommentVo): DataMap {
-        commentService.insert(CommentVo(comment.moodId, comment.content, UserInfoHolder.userId))
+        commentService.insert(CommentVo(comment.moodId, comment.content, UserInfoHolder.userVo.userId))
         return ResponseBuilder.create().ok().build()
     }
 

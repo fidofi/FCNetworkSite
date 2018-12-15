@@ -23,4 +23,9 @@ class MoodEntity {
         this.userId = userId
     }
 
+    constructor(moodId: Int, commentCount: Long, likeCount: Long) {
+        this.moodId = moodId
+        this.commentCount = commentCount
+        this.likeCount = likeCount
+    }
 }

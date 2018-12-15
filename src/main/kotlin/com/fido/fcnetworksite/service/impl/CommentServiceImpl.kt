@@ -1,5 +1,6 @@
 package com.fido.fcnetworksite.service.impl
 
+import com.fido.fcnetworksite.constant.COMMENT_PREFIX
 import com.fido.fcnetworksite.constant.PhotoConstant.DEFAULT_PHOTO_URL
 import com.fido.fcnetworksite.dao.CommentDao
 import com.fido.fcnetworksite.entity.CommentEntity
@@ -24,8 +25,9 @@ class CommentServiceImpl : CommentService {
     @Autowired
     private lateinit var valueOperations:ValueOperations<String,Any>
 
+
     override fun insert(commentVo: CommentVo) {
-        valueOperations.increment(commentVo.moodId.toString(),1)
+        valueOperations.increment(COMMENT_PREFIX+commentVo.moodId.toString(),1)
         commentDao.insert(CommentEntity(commentVo.content, commentVo.moodId, commentVo.userId))
 
     }

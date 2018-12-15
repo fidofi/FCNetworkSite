@@ -61,4 +61,39 @@
         )
         AND c_is_deleted= 0
     </select>
+
+    <insert id="batchUpdateMoodInfo" keyProperty="moodId"
+            parameterType="com.fido.fcnetworksite.entity.MoodEntity">
+        INSERT INTO t_mood (c_mood_id,c_comment_count,c_like_count)
+        VALUES
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.moodId},#{entity.commentCount},#{entity.likeCount})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        c_comment_count =c_comment_count + VALUES (c_comment_count),
+        c_like_count = c_like_count + VALUES (c_like_count)
+    </insert>
+
+    <select id="selectPopularMoodList" resultMap="MoodResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_mood WHERE
+        c_comment_count <![CDATA[ >= ]]> #{commentCount}
+        AND
+        c_like_count <![CDATA[ >= ]]> #{likeCount}
+        AND c_is_deleted= 0
+        ORDER BY c_comment_count DESC,c_like_count DESC
+    </select>
+
+    <select id="countPopularMood" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM (SELECT
+        c_mood_id
+        FROM t_mood WHERE
+        c_comment_count <![CDATA[ >= ]]> #{commentCount}
+        AND
+        c_like_count <![CDATA[ >= ]]> #{likeCount}
+        AND c_is_deleted= 0) t1
+    </select>
+
 </mapper>
