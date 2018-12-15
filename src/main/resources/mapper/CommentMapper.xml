@@ -25,6 +25,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM t_comment WHERE c_mood_id=#{moodId}
+        AND c_is_deleted !=1
     </select>
     <update id="delete" parameterType="java.lang.Integer">
     UPDATE t_comment

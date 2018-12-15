@@ -106,6 +106,10 @@ class UserServiceImpl : UserService {
     }
 
     override fun batchSelectUser(userIdList: List<Long>): List<UserVo> {
-        return userDao.batchListUser(userIdList).map { UserVo(it.userId, it.email, it.nickName, it.sex.code, it.birthday, it.photoUrl, it.introduction) }
+        if(userIdList.isNotEmpty()) {
+            return userDao.batchListUser(userIdList).map { UserVo(it.userId, it.email, it.nickName, it.sex.code, it.birthday, it.photoUrl, it.introduction) }
+        } else {
+            return emptyList()
+        }
     }
 }

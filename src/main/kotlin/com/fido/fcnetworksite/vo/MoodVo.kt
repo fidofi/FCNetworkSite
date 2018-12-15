@@ -16,4 +16,4 @@ data class MoodVo(
         val commentCount: Long = 0,
         val likeCount: Long = 0,
         val userPhoto:String="",
-        val photoList: List<PhotoVo>?)
+        val photoList: List<String>?)

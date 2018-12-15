@@ -11,9 +11,9 @@ import org.springframework.web.multipart.MultipartFile
 interface PhotoService {
     fun uploadPhotos(userId: Long, photo: MultipartFile): List<String>
 
-    fun batchInsert(moodId: Int, list: List<PhotoVo>)
+    fun batchInsert(moodId: Int, list: List<String>)
 
     fun select(moodId: Int): List<PhotoVo>
 
-    fun batchSelectByMoodId(moodIdList: List<Int>): Map<Int, List<PhotoVo>>
+    fun batchSelectByMoodId(moodIdList: List<Int>): Map<Int, List<String>>
 }

@@ -1,5 +1,6 @@
 package com.fido.fcnetworksite.service.impl
 
+import com.fido.fcnetworksite.constant.PhotoConstant.DEFAULT_PHOTO_URL
 import com.fido.fcnetworksite.dao.CommentDao
 import com.fido.fcnetworksite.entity.CommentEntity
 import com.fido.fcnetworksite.service.CommentService
@@ -35,8 +36,10 @@ class CommentServiceImpl : CommentService {
             return emptyList()
         }
         val userIdList = commentList.map { it.userId }
-        val userNameMap = userService.batchSelectUser(userIdList).map { it.userId to it.nickName }.toMap()
-        return commentDao.select(moodId).map { CommentVo(moodId, it.content, it.userId, it.commentId, userNameMap[it.userId]!!, it.createTime) }
+        val userInfoList=userService.batchSelectUser(userIdList)
+        val userNameMap = userInfoList.map { it.userId to it.nickName }.toMap()
+        val userPhotoMap=userInfoList.map { it.userId to it.photoUrl }.toMap()
+        return commentDao.select(moodId).map { CommentVo(moodId, it.content, it.userId, it.commentId, userNameMap[it.userId]!!, it.createTime,userPhotoMap[it.userId]?:DEFAULT_PHOTO_URL) }
     }
 
     override fun delete(commentId: Int) {

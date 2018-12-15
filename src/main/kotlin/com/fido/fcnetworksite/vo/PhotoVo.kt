@@ -7,7 +7,7 @@ package com.fido.fcnetworksite.vo
  */
 class PhotoVo {
     var photoUrl: String = ""
-    var order: Int = 0
+    var order: Int = 1
 
     constructor()
     constructor(photoUrl: String, order: Int) {

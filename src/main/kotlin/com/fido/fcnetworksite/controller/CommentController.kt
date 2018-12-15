@@ -40,5 +40,4 @@ class CommentController {
         commentService.delete(commentId)
         return ResponseBuilder.create().ok().build()
     }
-
 }

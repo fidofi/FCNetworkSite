@@ -47,19 +47,24 @@ class PhotoServiceImpl : PhotoService {
         return listOf(PHOTO_URL_PREFIX + photoName)
     }
 
-    override fun batchInsert(moodId: Int, list: List<PhotoVo>) {
-        photoDao.insert(list.map { PhotoEntity(moodId, it.photoUrl, it.order) })
+    override fun batchInsert(moodId: Int, list: List<String>) {
+        photoDao.insert(list.mapIndexed { index, s ->  PhotoEntity(moodId, s, index+1) })
     }
 
     override fun select(moodId: Int): List<PhotoVo> {
         return photoDao.select(moodId).map { PhotoVo(it.photoUrl, it.order) }
     }
 
-    override fun batchSelectByMoodId(moodIdList: List<Int>): Map<Int, List<PhotoVo>> {
-        val photoList = photoDao.batchSelectByMoodId(moodIdList)
-        val result = mutableMapOf<Int, List<PhotoVo>>()
-        photoList.groupBy { it.moodId }.forEach { moodId, photoList -> result[moodId] = photoList.map { PhotoVo(it.photoUrl, it.order) } }
-        return result
+    override fun batchSelectByMoodId(moodIdList: List<Int>): Map<Int, List<String>> {
+        if(moodIdList.isNotEmpty()) {
+            val photoList = photoDao.batchSelectByMoodId(moodIdList)
+            val result = mutableMapOf<Int, List<String>>()
+            photoList.groupBy { it.moodId }.forEach { moodId, photoList -> result[moodId] = photoList.sortedBy { it.order }.map { it.photoUrl } }
+            return result
+        }
+        else{
+            return emptyMap()
+        }
     }
 }
 

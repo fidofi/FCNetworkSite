@@ -8,4 +8,5 @@ import java.time.LocalDateTime
  * @description:
  */
 data class CommentVo(val moodId: Int, val content: String, val userId: Long,
-                     val commentId: Int = 0, val userName: String = "", val createTime: LocalDateTime = LocalDateTime.now())
+                     val commentId: Int = 0, val userName: String = "",
+                     val createTime: LocalDateTime = LocalDateTime.now(),val userPhoto:String="")
