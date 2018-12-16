@@ -3,6 +3,7 @@ package com.fido.fcnetworksite
 import org.mybatis.spring.annotation.MapperScan
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.scheduling.annotation.EnableScheduling
 
 /**
  * @author: fido
@@ -11,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
  */
 @SpringBootApplication
 @MapperScan(value = ["com.fido.fcnetworksite.dao"])
-//@EnableScheduling
+@EnableScheduling
 open class FcnetworksiteApplication {
     companion object {
         @JvmStatic

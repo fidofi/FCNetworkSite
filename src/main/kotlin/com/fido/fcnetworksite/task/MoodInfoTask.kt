@@ -25,7 +25,7 @@ class MoodInfoTask {
     /**
      * 定时任务，同步redis数据到数据库
      */
-    @Scheduled(cron = " 0/10 * * * ?")
+    @Scheduled(cron = "0 */10 * * * ?")
     fun synCommentAndLikeCount() {
         val commentKeys = redisTemplate.keys("$COMMENT_PREFIX*")
         val moodInfoMap = mutableMapOf<Int, MoodEntity>()
