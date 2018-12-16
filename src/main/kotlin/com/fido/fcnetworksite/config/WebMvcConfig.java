@@ -57,8 +57,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new UserInfoInterceptor());
         registry.addInterceptor(new CorsInterceptor());
+        registry.addInterceptor(new UserInfoInterceptor());
         super.addInterceptors(registry);
     }
 }
