@@ -25,16 +25,4 @@ object UserInfoHolder {
     internal fun clearLocal() {
         threadLocal.remove()
     }
-//    var userVo: UserVo
-//        get() {
-//            val request = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request
-//            val session = request.session
-//            return session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX) as UserVo
-//        }
-//        set(userVo) {
-//            val request = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request
-//            logger.info("==登录$userVo")
-//            val session = request.session
-//            session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, userVo)
-//        }
 }
