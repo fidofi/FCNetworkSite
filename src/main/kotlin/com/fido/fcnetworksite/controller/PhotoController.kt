@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile
  */
 @RestController
 @RequestMapping("/v1/photo")
-@CrossOrigin
+@CrossOrigin()
 class PhotoController {
 
     @Autowired

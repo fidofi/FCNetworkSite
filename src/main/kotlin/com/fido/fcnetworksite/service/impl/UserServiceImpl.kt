@@ -1,6 +1,7 @@
 package com.fido.fcnetworksite.service.impl
 
 import com.fido.fcnetworksite.constant.PhotoConstant
+import com.fido.fcnetworksite.constant.PrefixConstant
 import com.fido.fcnetworksite.dao.UserDao
 import com.fido.fcnetworksite.entity.UserEntity
 import com.fido.fcnetworksite.enum.SexEnum
@@ -15,6 +16,9 @@ import com.fido.fcnetworksite.vo.UserVo
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
+
 
 /**
  * @author: wangxianfei
@@ -71,7 +75,9 @@ class UserServiceImpl : UserService {
         }
         //登陆成功,存储用户信息
         val userVo = UserVo(user.userId, user.email, user.nickName, user.sex.code, user.birthday, user.photoUrl, user.introduction)
-//        logger.info("request:${request.session}")
+        val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
+        logger.info("request:${request.session}")
+        request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, userVo)
         UserInfoHolder.initLocal(userVo)
         return userVo
     }

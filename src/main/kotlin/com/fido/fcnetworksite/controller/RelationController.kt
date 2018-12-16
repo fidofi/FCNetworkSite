@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/v1/relation")
-@CrossOrigin
+@CrossOrigin()
 class RelationController {
     @Autowired
     private lateinit var relationService: RelationService

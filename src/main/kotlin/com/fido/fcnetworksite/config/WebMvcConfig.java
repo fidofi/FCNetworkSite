@@ -1,6 +1,5 @@
 package com.fido.fcnetworksite.config;
 
-import com.fido.fcnetworksite.handler.CorsInterceptor;
 import com.fido.fcnetworksite.handler.UserInfoInterceptor;
 import com.fido.fcnetworksite.resolver.JsonParamArgumentResolver;
 import org.springframework.context.annotation.Bean;
@@ -37,13 +36,22 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         argumentResolvers.add(new JsonParamArgumentResolver());
         super.addArgumentResolvers(argumentResolvers);
     }
-
+    //
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins("47.106.199.194:8060")
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders(
+                        "Accept",
+                        "Origin",
+                        "X-Requested-With",
+                        "Content-Type",
+                        "Last-Modified",
+                        "device",
+                        "token")
+                .exposedHeaders("Set-Cookie")
                 .allowCredentials(true)
-                .allowedMethods("GET", "POST", "DELETE", "PUT")
                 .maxAge(3600);
     }
 
@@ -57,7 +65,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CorsInterceptor());
+        //        registry.addInterceptor(new CorsInterceptor());
         registry.addInterceptor(new UserInfoInterceptor());
     }
 

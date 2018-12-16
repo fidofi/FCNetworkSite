@@ -4,6 +4,8 @@ import com.fido.fcnetworksite.constant.PrefixConstant
 import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.vo.UserVo
 import org.slf4j.LoggerFactory
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -16,13 +18,14 @@ import javax.servlet.http.HttpServletResponse
  */
 class UserInfoInterceptor : HandlerInterceptorAdapter() {
     private val logger = LoggerFactory.getLogger(UserInfoInterceptor::class.java)
-    override fun preHandle(request: HttpServletRequest, response: HttpServletResponse,
+    override fun preHandle(httpRequest: HttpServletRequest, response: HttpServletResponse,
                            handler: Any): Boolean {
-        val uri = request.requestURI
+        val uri = httpRequest.requestURI
         logger.info("inside interceptor,uri:", uri)
         if (uri == "/fcnetworksite/v1/user/login") {
             return true
         }
+        val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request;
         val session = request.session
         logger.info("interceptor session:" + session)
         //会话暂未失效

@@ -49,9 +49,15 @@ class RelationServiceImpl : RelationService {
         val total = relationDao.countFans(userId)
         var userIdList = relationList.map { it.followingId }.toMutableList()
         val userInfoMap = userService.batchSelectUser(userIdList).map { it.userId to it }.toMap()
-        return PageInfoVo(total, pageIndex, pageSize, userIdList.map {
-            UserBaseInfoVo(it, userInfoMap[it]!!.nickName, userInfoMap[it]!!.photoUrl, userInfoMap[it]!!.introduction)
-        })
+        val userBaseInfoVoList = mutableListOf<UserBaseInfoVo>()
+        userIdList.forEach {
+            var state = 0
+            if (relationDao.getRelation(userId, it) != null) {
+                state = 2
+            }
+            userBaseInfoVoList.add(UserBaseInfoVo(it, userInfoMap[it]!!.nickName, userInfoMap[it]!!.photoUrl, userInfoMap[it]!!.introduction, state))
+        }
+        return PageInfoVo(total, pageIndex, pageSize, userBaseInfoVoList)
     }
 
     /**
@@ -66,9 +72,15 @@ class RelationServiceImpl : RelationService {
         val total = relationDao.countFollowing(userId)
         var userIdList = relationList.map { it.followingId }.toMutableList()
         val userInfoMap = userService.batchSelectUser(userIdList).map { it.userId to it }.toMap()
-        return PageInfoVo(total, pageIndex, pageSize, userIdList.map {
-            UserBaseInfoVo(it, userInfoMap[it]!!.nickName, userInfoMap[it]!!.photoUrl, userInfoMap[it]!!.introduction)
-        })
+        val userBaseInfoVoList = mutableListOf<UserBaseInfoVo>()
+        userIdList.forEach {
+            var state = 1
+            if (relationDao.getRelation(userId, it) != null) {
+                state = 2
+            }
+            userBaseInfoVoList.add(UserBaseInfoVo(it, userInfoMap[it]!!.nickName, userInfoMap[it]!!.photoUrl, userInfoMap[it]!!.introduction, state))
+        }
+        return PageInfoVo(total, pageIndex, pageSize, userBaseInfoVoList)
     }
 
     override fun getAllFollowingIdList(userId: Long): List<Long> {
