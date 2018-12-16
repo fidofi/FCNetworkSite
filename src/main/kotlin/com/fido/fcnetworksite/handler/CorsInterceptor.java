@@ -1,5 +1,7 @@
 package com.fido.fcnetworksite.handler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,33 +15,36 @@ import javax.servlet.http.HttpServletResponse;
  * @description:
  */
 public class CorsInterceptor implements HandlerInterceptor {
+    private final Logger logger = LoggerFactory.getLogger(UserInfoInterceptor.class);
 
     @Override
     public boolean preHandle(
             HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        logger.info("inside corsinterceptor");
         if (request.getHeader(HttpHeaders.ORIGIN) != null) {
             response.addHeader("Access-Control-Allow-Origin", "*");
             response.addHeader(
                     "Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-            response.addHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            response.addHeader("Access-Control-Allow-Headers", "Content-Type");
             response.addHeader("Access-Control-Max-Age", "3600");
         }
         return true;
     }
 
-    /** 在业务处理器处理请求执行完成后,生成视图之前执行的动作 可在modelAndView中加入数据，比如当前时间 */
     @Override
     public void postHandle(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            Object handler,
+            HttpServletRequest httpServletRequest,
+            HttpServletResponse httpServletResponse,
+            Object o,
             ModelAndView modelAndView)
             throws Exception {}
 
-    /** 在DispatcherServlet完全处理完请求后被调用,可用于清理资源等 当有拦截器抛出异常时,会从当前拦截器往回执行所有的拦截器的afterCompletion() */
     @Override
     public void afterCompletion(
-            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            HttpServletRequest httpServletRequest,
+            HttpServletResponse httpServletResponse,
+            Object o,
+            Exception e)
             throws Exception {}
 }

@@ -20,7 +20,6 @@ mybatis:
 server:
   context-path: "/fcnetworksite"
   port: 8060
-  address: 47.106.199.194
 
 pagehelper:
   helperDialect=mysql

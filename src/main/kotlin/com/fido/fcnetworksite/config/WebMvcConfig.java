@@ -1,5 +1,6 @@
 package com.fido.fcnetworksite.config;
 
+import com.fido.fcnetworksite.handler.CorsInterceptor;
 import com.fido.fcnetworksite.handler.UserInfoInterceptor;
 import com.fido.fcnetworksite.resolver.JsonParamArgumentResolver;
 import org.springframework.context.annotation.Bean;
@@ -56,6 +57,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new CorsInterceptor());
         registry.addInterceptor(new UserInfoInterceptor());
     }
 
