@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest
  */
 @RestController
 @RequestMapping("/v1/mood")
+@CrossOrigin
 class MoodController {
     @Autowired
     private lateinit var moodService: MoodService
