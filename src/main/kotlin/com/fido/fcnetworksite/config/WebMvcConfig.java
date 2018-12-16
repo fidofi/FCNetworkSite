@@ -2,10 +2,10 @@ package com.fido.fcnetworksite.config;
 
 import com.fido.fcnetworksite.handler.UserInfoInterceptor;
 import com.fido.fcnetworksite.resolver.JsonParamArgumentResolver;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -37,23 +37,23 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         super.addArgumentResolvers(argumentResolvers);
     }
     //
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders(
-                        "Accept",
-                        "Origin",
-                        "X-Requested-With",
-                        "Content-Type",
-                        "Last-Modified",
-                        "device",
-                        "token")
-                .exposedHeaders("Set-Cookie")
-                .allowCredentials(true)
-                .maxAge(3600);
-    }
+    //    @Override
+    //    public void addCorsMappings(CorsRegistry registry) {
+    //        registry.addMapping("/**")
+    //                .allowedOrigins("http://localhost:3000")
+    //                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
+    //                .allowedHeaders(
+    //                        "Accept",
+    //                        "Origin",
+    //                        "X-Requested-With",
+    //                        "Content-Type",
+    //                        "Last-Modified",
+    //                        "device",
+    //                        "token")
+    //                .exposedHeaders("Set-Cookie")
+    //                .allowCredentials(true)
+    //                .maxAge(3600);
+    //    }
 
     //    @Override
     //    public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -86,14 +86,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     //        source.registerCorsConfiguration("/**", addcorsConfig());
     //        return new CorsFilter(source);
     //    }
-    //    @Bean
-    //    public FilterRegistrationBean someFilterRegistration() {
-    //        FilterRegistrationBean registration = new FilterRegistrationBean();
-    //        registration.setFilter(new OriginFilter());
-    //        registration.addUrlPatterns("/*");
-    //        registration.addInitParameter("paramName", "paramValue");
-    //        registration.setName("sessionFilter");
-    //        registration.setOrder(Integer.MAX_VALUE);
-    //        return registration;
-    //    }
+    @Bean
+    public FilterRegistrationBean someFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new OriginFilter());
+        registration.addUrlPatterns("/*");
+        registration.addInitParameter("paramName", "paramValue");
+        registration.setName("sessionFilter");
+        registration.setOrder(Integer.MAX_VALUE);
+        return registration;
+    }
 }

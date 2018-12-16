@@ -25,7 +25,7 @@ public class CorsInterceptor implements HandlerInterceptor {
         String method = request.getMethod();
         logger.info("inside corsinterceptor");
         if (request.getHeader(HttpHeaders.ORIGIN) != null) {
-            response.addHeader("Access-Control-Allow-Origin", "*");
+            response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
             response.addHeader(
                     "Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
             response.addHeader("Access-Control-Allow-Headers", "Content-Type");

@@ -26,7 +26,7 @@ public class OriginFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         String method = request.getMethod();
         // this origin value could just as easily have come from a database
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Credentials", "true");
