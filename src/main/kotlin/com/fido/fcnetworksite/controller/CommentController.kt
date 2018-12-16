@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/v1/comment")
-@CrossOrigin
 class CommentController {
     @Autowired
     private lateinit var commentService: CommentService

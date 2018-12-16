@@ -33,7 +33,7 @@ class UserInfoInterceptor : HandlerInterceptorAdapter() {
             if (UserInfoHolder.userInfo == null) {
                 UserInfoHolder.initLocal(session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX) as UserVo)
             }
-            return true
+            return super.preHandle(request, response, handler)
         }
         return false
     }

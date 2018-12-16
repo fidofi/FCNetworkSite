@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*
  */
 @RestController
 @RequestMapping("/v1/mood")
-@CrossOrigin
 class MoodController {
     @Autowired
     private lateinit var moodService: MoodService

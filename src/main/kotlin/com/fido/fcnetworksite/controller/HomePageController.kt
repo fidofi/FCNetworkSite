@@ -5,7 +5,6 @@ import com.fido.fcnetworksite.service.HomePageService
 import com.fido.fcnetworksite.util.ResponseBuilder
 import com.fido.fcnetworksite.util.UserInfoHolder
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController
 @RequestMapping("/v1/home-page")
-@CrossOrigin
 class HomePageController {
     @Autowired
     private lateinit var homePageService: HomePageService
