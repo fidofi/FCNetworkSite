@@ -11,6 +11,7 @@ import com.fido.fcnetworksite.exception.UserException
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.MD5Util
 import com.fido.fcnetworksite.util.SaltUtils
+import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.vo.UserVo
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -74,8 +75,9 @@ class UserServiceImpl : UserService {
         //登陆成功,存储用户信息
         val userVo = UserVo(user.userId, user.email, user.nickName, user.sex.code, user.birthday, user.photoUrl, user.introduction)
         val request = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request
-        logger.info("request:$request")
+        logger.info("request:${request.session}")
         request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, userVo)
+        UserInfoHolder.initLocal(userVo)
         return userVo
     }
 
