@@ -12,6 +12,7 @@ object UserInfoHolder {
     private val logger = LoggerFactory.getLogger(UserInfoHolder::class.java)
     private val threadLocal = ThreadLocal<UserVo>()
     internal fun initLocal(userVo: UserVo) {
+        logger.info("===login:$userVo")
         threadLocal.set(userVo)
     }
 
