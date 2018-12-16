@@ -2,13 +2,11 @@ package com.fido.fcnetworksite.config;
 
 import com.fido.fcnetworksite.handler.UserInfoInterceptor;
 import com.fido.fcnetworksite.resolver.JsonParamArgumentResolver;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 
 import java.util.List;
 
@@ -37,14 +35,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         super.addArgumentResolvers(argumentResolvers);
     }
 
-    //    @Override
-    //    public void addCorsMappings(CorsRegistry registry) {
-    //        registry.addMapping("/**")
-    //                .allowedOrigins("*")
-    //                .allowCredentials(true)
-    //                .allowedMethods("GET", "POST", "DELETE", "PUT")
-    //                .maxAge(3600);
-    //    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .maxAge(3600);
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -77,4 +75,15 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     //        source.registerCorsConfiguration("/**", addcorsConfig());
     //        return new CorsFilter(source);
     //    }
+    /*使用annotation tag来取代<bean></bean>*/
+    @Bean
+    public FilterRegistrationBean someFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new OriginFilter());
+        registration.addUrlPatterns("/*");
+        registration.addInitParameter("paramName", "paramValue");
+        registration.setName("sessionFilter");
+        registration.setOrder(Integer.MAX_VALUE);
+        return registration;
+    }
 }

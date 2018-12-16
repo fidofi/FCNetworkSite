@@ -19,4 +19,6 @@ open class FcnetworksiteApplication {
             SpringApplication.run(FcnetworksiteApplication::class.java, *args)
         }
     }
+
 }
+
