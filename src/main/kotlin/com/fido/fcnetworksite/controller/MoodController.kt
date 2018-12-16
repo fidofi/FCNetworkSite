@@ -24,7 +24,7 @@ class MoodController {
     @PostMapping()
     @ApiOperation(value = "发布心情")
     fun createMood(@RequestBody moodVo: MoodVo): DataMap {
-        moodService.insertMood(MoodVo(content = moodVo.content, photoList = moodVo.photoList, userId = UserInfoHolder.userId))
+        moodService.insertMood(MoodVo(content = moodVo.content, photoList = moodVo.photoList, userId = UserInfoHolder.userInfo.userId))
         return ResponseBuilder.create().ok().build()
     }
 
