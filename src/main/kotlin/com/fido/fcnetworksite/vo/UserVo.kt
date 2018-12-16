@@ -22,4 +22,8 @@ class UserVo(@NotNull(message = "userId不能为空", groups = [UpdateUser::clas
              val photoUrl: String = DEFAULT_PHOTO_URL,
              val introduction: String = "",
              @NotBlank(message = "password不能为空", groups = [SaveUser::class]) val password: String = ""
-)
+) {
+    override fun toString(): String {
+        return "UserVo(userId=$userId, email='$email', nickName='$nickName', sex=$sex, birthday=$birthday, photoUrl='$photoUrl', introduction='$introduction', password='$password')"
+    }
+}

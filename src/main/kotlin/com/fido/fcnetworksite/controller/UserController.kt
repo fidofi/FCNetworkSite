@@ -3,11 +3,11 @@ package com.fido.fcnetworksite.controller
 import com.fido.fcnetworksite.annotation.SaveUser
 import com.fido.fcnetworksite.annotation.UpdateUser
 import com.fido.fcnetworksite.base.DataMap
+import com.fido.fcnetworksite.constant.PrefixConstant
 import com.fido.fcnetworksite.enum.StatusEnum
 import com.fido.fcnetworksite.exception.BaseException
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.ResponseBuilder
-import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.util.ValidatorUtils
 import com.fido.fcnetworksite.vo.LoginVo
 import com.fido.fcnetworksite.vo.UpdatePasswordVo
@@ -52,8 +52,7 @@ class UserController {
     fun login(@RequestBody loginVo: LoginVo,
               request: HttpServletRequest): DataMap {
         val userVo = userService.login(loginVo.email, loginVo.password)
-        UserInfoHolder.userVo = userVo
-//        request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, UserInfoHolder.userInfo)
+        request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, userVo)
         return ResponseBuilder.create().ok().data(userVo).build()
     }
 

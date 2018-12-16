@@ -70,7 +70,7 @@ class UserServiceImpl : UserService {
         }
         //登陆成功,存储用户信息
         val userVo = UserVo(user.userId, user.email, user.nickName, user.sex.code, user.birthday, user.photoUrl, user.introduction)
-        UserInfoHolder.userVo = userVo
+        UserInfoHolder.initLocal(userVo)
         return userVo
     }
 
