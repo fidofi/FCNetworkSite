@@ -3,7 +3,6 @@ package com.fido.fcnetworksite.controller
 import com.fido.fcnetworksite.annotation.SaveUser
 import com.fido.fcnetworksite.annotation.UpdateUser
 import com.fido.fcnetworksite.base.DataMap
-import com.fido.fcnetworksite.constant.PrefixConstant
 import com.fido.fcnetworksite.enum.StatusEnum
 import com.fido.fcnetworksite.exception.BaseException
 import com.fido.fcnetworksite.service.UserService
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.BindingResult
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import javax.servlet.http.HttpServletRequest
 
 /**
  * @author: Fido Wang (fromwxf@gmail.com)
@@ -49,10 +47,8 @@ class UserController {
     @ApiImplicitParams(ApiImplicitParam(dataType = "String", name = "email", value = "邮件地址", required = true),
             ApiImplicitParam(dataType = "String", name = "password", value = "密码", required = true))
     @PostMapping("/login")
-    fun login(@RequestBody loginVo: LoginVo,
-              request: HttpServletRequest): DataMap {
+    fun login(@RequestBody loginVo: LoginVo): DataMap {
         val userVo = userService.login(loginVo.email, loginVo.password)
-        request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, userVo)
         return ResponseBuilder.create().ok().data(userVo).build()
     }
 
