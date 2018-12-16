@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/v1/user")
 @Api(description = "用户相关的接口")
-@CrossOrigin
 class UserController {
     @Autowired
     private lateinit var userService: UserService

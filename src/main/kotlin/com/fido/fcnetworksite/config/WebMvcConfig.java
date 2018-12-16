@@ -1,16 +1,16 @@
 package com.fido.fcnetworksite.config;
 
-import com.fido.fcnetworksite.handler.CorsInterceptor;
 import com.fido.fcnetworksite.handler.UserInfoInterceptor;
 import com.fido.fcnetworksite.resolver.JsonParamArgumentResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,14 +38,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         super.addArgumentResolvers(argumentResolvers);
     }
 
-    //    @Override
-    //    public void addCorsMappings(CorsRegistry registry) {
-    //        registry.addMapping("/**")
-    //                .allowedOrigins("*")
-    //                .allowCredentials(true)
-    //                .allowedMethods("GET", "POST", "DELETE", "PUT")
-    //                .maxAge(3600);
-    //    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .maxAge(3600);
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -57,8 +57,25 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CorsInterceptor());
         registry.addInterceptor(new UserInfoInterceptor());
         super.addInterceptors(registry);
+    }
+
+    private CorsConfiguration addcorsConfig() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        List<String> list = new ArrayList<>();
+        list.add("*");
+        corsConfiguration.setAllowedOrigins(list);
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*");
+        return corsConfiguration;
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", addcorsConfig());
+        return new CorsFilter(source);
     }
 }
