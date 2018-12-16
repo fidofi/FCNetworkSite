@@ -3,6 +3,7 @@ package com.fido.fcnetworksite.handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +22,7 @@ public class CorsInterceptor implements HandlerInterceptor {
     public boolean preHandle(
             HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+        String method = request.getMethod();
         logger.info("inside corsinterceptor");
         if (request.getHeader(HttpHeaders.ORIGIN) != null) {
             response.addHeader("Access-Control-Allow-Origin", "*");
@@ -28,6 +30,9 @@ public class CorsInterceptor implements HandlerInterceptor {
                     "Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
             response.addHeader("Access-Control-Allow-Headers", "Content-Type");
             response.addHeader("Access-Control-Max-Age", "3600");
+        }
+        if ("OPTIONS".equals(method)) { // 检测是options方法则直接返回200
+            response.setStatus(HttpStatus.OK.value());
         }
         return true;
     }
