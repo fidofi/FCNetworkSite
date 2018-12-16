@@ -19,7 +19,7 @@ class UserInfoInterceptor : HandlerInterceptorAdapter() {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse,
                            handler: Any): Boolean {
         val uri = request.requestURI
-        logger.info("inside interceptor,uri:", { uri })
+        logger.info("inside interceptor,uri:", uri)
         if (uri == "/fcnetworksite/v1/user/login") {
             return true
         }
