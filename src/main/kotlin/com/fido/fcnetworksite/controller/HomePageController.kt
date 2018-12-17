@@ -3,7 +3,7 @@ package com.fido.fcnetworksite.controller
 import com.fido.fcnetworksite.base.DataMap
 import com.fido.fcnetworksite.service.HomePageService
 import com.fido.fcnetworksite.util.ResponseBuilder
-import com.fido.fcnetworksite.util.UserInfoHolder
+import com.fido.fcnetworksite.util.UserInfoUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -24,6 +24,6 @@ class HomePageController {
 
     @GetMapping()
     fun getHomePage(): DataMap {
-        return ResponseBuilder.create().ok().data(homePageService.getHomePage(UserInfoHolder.userId)).build()
+        return ResponseBuilder.create().ok().data(homePageService.getHomePage(UserInfoUtils.getUserVo().userId)).build()
     }
 }

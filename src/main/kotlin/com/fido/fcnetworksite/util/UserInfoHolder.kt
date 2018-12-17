@@ -25,4 +25,6 @@ object UserInfoHolder {
     internal fun clearLocal() {
         threadLocal.remove()
     }
+
 }
+

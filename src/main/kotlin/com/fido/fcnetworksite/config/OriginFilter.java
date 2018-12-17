@@ -32,7 +32,7 @@ public class OriginFilter implements Filter {
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader(
                 "Access-Control-Allow-Headers",
-                "Accept, Origin, X-Requested-With, Content-Type,Last-Modified,device,token");
+                "Accept, Origin, X-Requested-With,Content-Type,Last-Modified,device,token");
         if ("OPTIONS".equals(method)) { // 检测是options方法则直接返回200
             response.setStatus(HttpStatus.OK.value());
         } else {
@@ -43,6 +43,5 @@ public class OriginFilter implements Filter {
     @Override
     public void destroy() {
         // TODO Auto-generated method stub
-
     }
 }

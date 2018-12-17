@@ -1,5 +1,6 @@
 package com.fido.fcnetworksite.config;
 
+import com.fido.fcnetworksite.handler.LoginInterceptor;
 import com.fido.fcnetworksite.handler.UserInfoInterceptor;
 import com.fido.fcnetworksite.resolver.JsonParamArgumentResolver;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -36,56 +37,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         argumentResolvers.add(new JsonParamArgumentResolver());
         super.addArgumentResolvers(argumentResolvers);
     }
-    //
-    //    @Override
-    //    public void addCorsMappings(CorsRegistry registry) {
-    //        registry.addMapping("/**")
-    //                .allowedOrigins("http://localhost:3000")
-    //                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-    //                .allowedHeaders(
-    //                        "Accept",
-    //                        "Origin",
-    //                        "X-Requested-With",
-    //                        "Content-Type",
-    //                        "Last-Modified",
-    //                        "device",
-    //                        "token")
-    //                .exposedHeaders("Set-Cookie")
-    //                .allowCredentials(true)
-    //                .maxAge(3600);
-    //    }
-
-    //    @Override
-    //    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    //        registry.addResourceHandler("swagger-ui.html")
-    //                .addResourceLocations("classpath:/META-INF/resources/");
-    //        registry.addResourceHandler("/webjars/**")
-    //                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    //    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //        registry.addInterceptor(new CorsInterceptor());
-        registry.addInterceptor(new UserInfoInterceptor());
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**");
     }
 
-    //    private CorsConfiguration addcorsConfig() {
-    //        CorsConfiguration corsConfiguration = new CorsConfiguration();
-    //        List<String> list = new ArrayList<>();
-    //        list.add("*");
-    //        corsConfiguration.setAllowedOrigins(list);
-    //        corsConfiguration.addAllowedOrigin("*");
-    //        corsConfiguration.addAllowedHeader("*");
-    //        corsConfiguration.addAllowedMethod("*");
-    //        return corsConfiguration;
-    //    }
-
-    //    @Bean
-    //    public CorsFilter corsFilter() {
-    //        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    //        source.registerCorsConfiguration("/**", addcorsConfig());
-    //        return new CorsFilter(source);
-    //    }
     @Bean
     public FilterRegistrationBean someFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();

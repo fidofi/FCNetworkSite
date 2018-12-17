@@ -3,7 +3,7 @@ package com.fido.fcnetworksite.controller
 import com.fido.fcnetworksite.base.DataMap
 import com.fido.fcnetworksite.service.RelationService
 import com.fido.fcnetworksite.util.ResponseBuilder
-import com.fido.fcnetworksite.util.UserInfoHolder
+import com.fido.fcnetworksite.util.UserInfoUtils
 import com.fido.fcnetworksite.vo.RelationVo
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -25,7 +25,7 @@ class RelationController {
      */
     @PostMapping("/follow")
     fun followSomeOne(@RequestBody relationVo: RelationVo): DataMap {
-        relationService.followSomeOne(UserInfoHolder.userId, relationVo.followedId)
+        relationService.followSomeOne(UserInfoUtils.getUserVo().userId, relationVo.followedId)
         return ResponseBuilder.create().ok().build()
     }
 
@@ -34,7 +34,7 @@ class RelationController {
      */
     @PostMapping("/unfollow")
     fun unFollowSomeOne(@RequestBody relationVo: RelationVo): DataMap {
-        relationService.unFollowSomeOne(UserInfoHolder.userId, relationVo.followedId)
+        relationService.unFollowSomeOne(UserInfoUtils.getUserVo().userId, relationVo.followedId)
         return ResponseBuilder.create().ok().build()
     }
 

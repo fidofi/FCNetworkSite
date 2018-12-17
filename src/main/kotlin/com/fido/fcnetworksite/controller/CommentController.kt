@@ -3,7 +3,7 @@ package com.fido.fcnetworksite.controller
 import com.fido.fcnetworksite.base.DataMap
 import com.fido.fcnetworksite.service.CommentService
 import com.fido.fcnetworksite.util.ResponseBuilder
-import com.fido.fcnetworksite.util.UserInfoHolder
+import com.fido.fcnetworksite.util.UserInfoUtils
 import com.fido.fcnetworksite.vo.CommentVo
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,7 +24,7 @@ class CommentController {
     @PostMapping
     @ApiOperation(value = "发表评论")
     fun insertComment(@RequestBody comment: CommentVo): DataMap {
-        commentService.insert(CommentVo(comment.moodId, comment.content, UserInfoHolder.userId))
+        commentService.insert(CommentVo(comment.moodId, comment.content, UserInfoUtils.getUserVo().userId))
         return ResponseBuilder.create().ok().build()
     }
 
