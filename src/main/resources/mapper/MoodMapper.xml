@@ -29,12 +29,12 @@
     <select id="selectMoodByUserId" resultMap="MoodResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM t_mood WHERE c_user_id=#{userId} AND c_is_deleted= 0
+        FROM t_mood WHERE c_user_id=#{userId} AND c_is_deleted= 0 order by c_create_time DESC
     </select>
     <select id="selectMoodLikeContent" resultMap="MoodResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM t_mood WHERE c_mood_content LIKE "%"#{content}"%" AND c_is_deleted= 0
+        FROM t_mood WHERE c_mood_content LIKE "%"#{content}"%" AND c_is_deleted= 0 order by c_create_time DESC
     </select>
     <select id="countMoodLikeContent" resultType="java.lang.Long">
         SELECT
@@ -59,7 +59,7 @@
             #{moodId}
         </foreach>
         )
-        AND c_is_deleted= 0
+        AND c_is_deleted= 0 order by c_create_time DESC
     </select>
 
     <insert id="batchUpdateMoodInfo" keyProperty="moodId"

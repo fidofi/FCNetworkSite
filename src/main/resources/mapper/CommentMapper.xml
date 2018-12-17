@@ -25,7 +25,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM t_comment WHERE c_mood_id=#{moodId}
-        AND c_is_deleted !=1
+        AND c_is_deleted !=1 order by c_create_time desc
     </select>
     <update id="delete" parameterType="java.lang.Integer">
     UPDATE t_comment

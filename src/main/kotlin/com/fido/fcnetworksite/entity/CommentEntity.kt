@@ -23,6 +23,4 @@ class CommentEntity {
         this.moodId = moodId
         this.userId = userId
     }
-
-
 }
