@@ -79,7 +79,7 @@ class ManagerController {
         return ResponseBuilder.create().ok().build()
     }
 
-    @PostMapping("reject-mood")
+    @PostMapping("/reject-mood")
     fun rejectMood(@RequestBody moodVo: MoodVo): DataMap {
         managerService.unPassMood(moodVo.moodId)
         return ResponseBuilder.create().ok().build()
