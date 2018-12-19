@@ -36,4 +36,14 @@ interface MoodDao {
 
     fun countPopularMood(@Param("commentCount") commentCount: Long,
                          @Param("likeCount") likeCount: Long): Long
+
+    fun selectMoodByCondition(@Param("state") state:Int,
+                              @Param("userId")userId:Long,
+                              @Param("content") content:String,
+                              @Param("start") start:Int,
+                              @Param("pageSize")pageSize:Int):List<MoodEntity>
+
+    fun getTotalByCondition(@Param("state") state:Int,
+                            @Param("userId")userId:Long,
+                            @Param("content") content:String):Long
 }

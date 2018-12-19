@@ -1,5 +1,6 @@
 package com.fido.fcnetworksite.service
 
+import com.fido.fcnetworksite.vo.PageInfoVo
 import com.fido.fcnetworksite.vo.UserVo
 
 /**
@@ -14,9 +15,9 @@ interface UserService {
 
     fun updateUserPassword(email: String, newPassword: String, oldPassword: String)
 
-    fun freezeUser(userId: Long)
-
     fun login(email: String, password: String): UserVo
+
+    fun freezeUser(userId: Long)
 
     fun unFreezeUser(userId: Long)
 
@@ -29,4 +30,10 @@ interface UserService {
     fun selectUserById(userId: Long): UserVo
 
     fun batchSelectUser(userIdList: List<Long>): List<UserVo>
+
+    fun passUser(userId: Long)
+
+    fun reject(userId: Long)
+
+    fun selectUserByState(state:Int,page:Int,pageSize:Int):PageInfoVo<UserVo>
 }

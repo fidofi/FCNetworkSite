@@ -117,4 +117,8 @@ class MoodServiceImpl : MoodService {
         }
         )
     }
+
+    override fun selectMoodByCondition(state: Int, userName: String, content: String, start: Int, pageSize: Int): List<MoodEntity> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

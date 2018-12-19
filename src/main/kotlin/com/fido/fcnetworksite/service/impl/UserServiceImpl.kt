@@ -12,6 +12,7 @@ import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.MD5Util
 import com.fido.fcnetworksite.util.SaltUtils
 import com.fido.fcnetworksite.util.UserInfoHolder
+import com.fido.fcnetworksite.vo.PageInfoVo
 import com.fido.fcnetworksite.vo.UserVo
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -36,9 +37,7 @@ class UserServiceImpl : UserService {
             throw BaseException(StatusEnum.EMAIL_REPEAT)
         }
         val userEntity = UserEntity(userVo.userId, userVo.email, userVo.nickName,
-                SexEnum.getSexEnumByCode(userVo.sex), userVo.birthday, userVo.photoUrl
-                ?: PhotoConstant.DEFAULT_PHOTO_URL
-                ?: PhotoConstant.DEFAULT_PHOTO_URL, userVo.password)
+                SexEnum.getSexEnumByCode(userVo.sex), userVo.birthday, userVo.photoUrl, userVo.password)
         val salt = SaltUtils.createSalt()
         val password = MD5Util.encrypt(userVo.password + salt)
         userEntity.salt = salt
@@ -49,7 +48,7 @@ class UserServiceImpl : UserService {
     override fun updateUserInfo(userVo: UserVo) {
         userDao.updateUserInfo(UserEntity(userVo.userId, userVo.email, userVo.nickName,
                 SexEnum.getSexEnumByCode(userVo.sex), userVo.birthday,
-                userVo.photoUrl ?: PhotoConstant.DEFAULT_PHOTO_URL, userVo.introduction))
+                userVo.photoUrl, userVo.introduction))
     }
 
     override fun updateUserPassword(email: String, newPassword: String, oldPassword: String) {
@@ -114,10 +113,26 @@ class UserServiceImpl : UserService {
     }
 
     override fun batchSelectUser(userIdList: List<Long>): List<UserVo> {
-        if (userIdList.isNotEmpty()) {
-            return userDao.batchListUser(userIdList).map { UserVo(it.userId, it.email, it.nickName, it.sex.code, it.birthday, it.photoUrl, it.introduction) }
+        return if (userIdList.isNotEmpty()) {
+            userDao.batchListUser(userIdList).map { UserVo(it.userId, it.email, it.nickName, it.sex.code, it.birthday, it.photoUrl, it.introduction) }
         } else {
-            return emptyList()
+            emptyList()
         }
+    }
+
+    override fun passUser(userId: Long) {
+        userDao.passUser(userId)
+    }
+
+    override fun reject(userId: Long) {
+        userDao.rejectUser(userId)
+    }
+
+    override fun selectUserByState(state: Int, page: Int, pageSize: Int):PageInfoVo<UserVo> {
+        val total=  userDao.getTotal(state)
+        val start=page*pageSize
+        val result = userDao.selectUser(state, start, pageSize).map {
+            UserVo(it.userId,it.email,it.nickName,it.sex.code,it.birthday,it.photoUrl,it.introduction,status = it.status) }
+        return PageInfoVo(total, page, pageSize, result)
     }
 }

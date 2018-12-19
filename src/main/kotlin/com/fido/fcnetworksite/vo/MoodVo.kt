@@ -17,4 +17,5 @@ data class MoodVo(
         val likeCount: Long = 0,
         val userPhoto: String = "",
         val photoList: List<String>?,
-        val createTime: LocalDateTime = LocalDateTime.now())
+        val createTime: LocalDateTime = LocalDateTime.now(),
+        val state:Int=0)

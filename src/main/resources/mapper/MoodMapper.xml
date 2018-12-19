@@ -10,7 +10,7 @@
         <result column="c_like_count" property="likeCount"/>
         <result column="c_create_time" property="createTime"/>
         <result column="c_update_time" property="updateTime"/>
-        <result column="c_is_deleted" property="isDeleted"/>
+        <result column="c_state" property="state"/>
     </resultMap>
     <sql id="Base_Column_List">
     c_mood_id,c_mood_content,c_user_id,c_comment_count,c_like_count
@@ -21,6 +21,7 @@
         VALUES (#{userId},
         #{content})
     </insert>
+
     <update id="updateMoodInfo">
         UPDATE t_mood SET c_comment_count=#{commentCount} AND c_like_count=#{likeCount}
         WHERE c_mood_id=#{moodId}
@@ -29,28 +30,33 @@
     <select id="selectMoodByUserId" resultMap="MoodResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM t_mood WHERE c_user_id=#{userId} AND c_is_deleted= 0 order by c_create_time DESC
+        FROM t_mood WHERE c_user_id=#{userId} AND c_state= 0 order by c_create_time DESC
     </select>
+
     <select id="selectMoodLikeContent" resultMap="MoodResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM t_mood WHERE c_mood_content LIKE "%"#{content}"%" AND c_is_deleted= 0 order by c_create_time DESC
+        FROM t_mood WHERE c_mood_content LIKE "%"#{content}"%" AND c_state= 0 order by c_create_time DESC
     </select>
+
     <select id="countMoodLikeContent" resultType="java.lang.Long">
         SELECT
         COUNT(c_mood_id)
-        FROM t_mood WHERE c_mood_content LIKE "%"#{content}"%" AND c_is_deleted= 0
+        FROM t_mood WHERE c_mood_content LIKE "%"#{content}"%" AND c_state= 0
     </select>
+
     <select id="countMoodByUserId" resultType="java.lang.Long">
         SELECT
         COUNT(c_mood_id)
-        FROM t_mood WHERE c_user_id = #{userId} AND c_is_deleted= 0
+        FROM t_mood WHERE c_user_id = #{userId} AND c_state= 0
     </select>
+
     <update id="deleteMood" parameterType="java.lang.Integer">
     UPDATE t_mood
-    SET c_is_deleted= 1
+    SET c_state= 1
     WHERE c_mood_id = #{moodId}
   </update>
+
     <select id="selectByMoodIdList" resultMap="MoodResultMap">
         SELECT
         <include refid="Base_Column_List"/>
@@ -59,7 +65,7 @@
             #{moodId}
         </foreach>
         )
-        AND c_is_deleted= 0 order by c_create_time DESC
+        AND c_state= 0 order by c_create_time DESC
     </select>
 
     <insert id="batchUpdateMoodInfo" keyProperty="moodId"
@@ -81,7 +87,7 @@
         c_comment_count <![CDATA[ >= ]]> #{commentCount}
         AND
         c_like_count <![CDATA[ >= ]]> #{likeCount}
-        AND c_is_deleted= 0
+        AND c_state= 0
         ORDER BY c_comment_count DESC,c_like_count DESC
     </select>
 
@@ -93,7 +99,40 @@
         c_comment_count <![CDATA[ >= ]]> #{commentCount}
         AND
         c_like_count <![CDATA[ >= ]]> #{likeCount}
-        AND c_is_deleted= 0) t1
+        AND c_state= 0) t1
+    </select>
+
+    <select id="selectMoodByCondition" resultMap="MoodResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_mood WHERE 1=1
+        <if test="state!=null">
+            AND c_state=#{state}
+        </if>
+        <if test="content!=null and content !=''">
+            AND c_mood_content LIKE "%"#{content}"%"
+        </if>
+        <if test="userId!=null">
+            AND c_user_id=#{userId}
+        </if>
+        ORDER BY c_create_time DESC
+        LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="getTotalByCondition" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ( SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_mood WHERE 1=1
+        <if test="state!=null">
+            AND c_state=#{state}
+        </if>
+        <if test="content!=null and content !=''">
+            AND c_mood_content LIKE "%"#{content}"%"
+        </if>
+        <if test="userId!=null">
+            AND c_user_id=#{userId}
+        </if>) t1
     </select>
 
 </mapper>

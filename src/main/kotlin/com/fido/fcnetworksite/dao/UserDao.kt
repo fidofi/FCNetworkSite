@@ -71,5 +71,22 @@ interface UserDao {
      */
     fun batchListUser(@Param("userIdList") userIdList: List<Long>): List<UserEntity>
 
+    /**
+     * 通过用户
+     */
+    fun passUser(@Param("userId") userId: Long)
+
+    /**
+     * 拒绝用户
+     */
+    fun rejectUser(@Param("userId")userId:Long)
+
+
+    fun selectUser(@Param("state") state: Int,
+                   @Param("start") start: Int,
+                   @Param("pageSize") pageSize: Int): List<UserEntity>
+
+
+    fun getTotal(@Param("state")state:Int):Long
 
 }

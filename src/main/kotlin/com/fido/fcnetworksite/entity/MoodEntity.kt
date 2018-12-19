@@ -13,7 +13,7 @@ class MoodEntity {
     var userId: Long = 0
     var createTime: LocalDateTime = LocalDateTime.now()
     var updateTime: LocalDateTime = LocalDateTime.now()
-    var isDeleted: Int = 0
+    var state: Int = 0
     var commentCount: Long = 0
     var likeCount: Long = 0
 

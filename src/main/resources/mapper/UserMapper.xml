@@ -79,14 +79,42 @@
         </foreach>
         )
     </select>
+
     <update id="freezeUser" parameterType="java.lang.Long">
     UPDATE t_user
     SET c_staus = 1,
     WHERE c_user_id = #{userId}
   </update>
+
     <update id="unFreezeUser" parameterType="java.lang.Long">
     UPDATE t_user
     SET c_staus = 0,
     WHERE c_user_id = #{userId}
+    </update>
+
+    <update id="passUser" parameterType="java.lang.Long">
+    UPDATE t_user
+    SET c_staus = 0,
+    WHERE c_user_id = #{userId}
   </update>
+
+    <update id="rejectUser" parameterType="java.lang.Long">
+    UPDATE t_user
+    SET c_staus = 3,
+    WHERE c_user_id = #{userId}
+  </update>
+
+    <select id="selectUser" resultMap="UserResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_user WHERE c_state = #{state} ORDER BY c_create_time DESC
+        LIMIT #{start},#{pageSize}
+    </select>
+
+    <select id="getTotal" resultType="java.lang.Long">
+        SELECT
+        count (*)
+        FROM t_user WHERE c_state = #{state}
+    </select>
+
 </mapper>
