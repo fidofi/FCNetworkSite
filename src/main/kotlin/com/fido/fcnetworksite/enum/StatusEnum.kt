@@ -51,6 +51,15 @@ enum class StatusEnum(val code: Int, val message: String) {
     /**
      * 用户不存在
      */
-    USER_NOT_EXIST(40006, "User not exist")
+    USER_NOT_EXIST(40006, "User not exist"),
 
+    /**
+     * 暂无登录权限
+     */
+    NO_LOGIN_PERMISSION(40007, "No login permission"),
+
+    /**
+     * 暂无发布权限
+     */
+    NO_CREATE_MOOD_PERMISSION(40008, "No create mood permission")
 }

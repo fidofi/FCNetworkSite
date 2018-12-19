@@ -1,6 +1,7 @@
 package com.fido.fcnetworksite.util
 
 import java.time.LocalDateTime
+import kotlin.random.Random
 
 /**
  * @author: Fido Wang (fromwxf@gmail.com)
@@ -9,6 +10,6 @@ import java.time.LocalDateTime
  */
 object PhotoUtils {
     fun getName(userId: Long): String {
-        return MD5Util.encrypt(LocalDateTime.now().toString() + "-" + userId).substring(0, 10) + "-" + userId + ".jpg"
+        return MD5Util.encrypt(LocalDateTime.now().toString() + "-" + Random.nextLong(100)).substring(0, 10) + "-" + userId + ".jpg"
     }
 }

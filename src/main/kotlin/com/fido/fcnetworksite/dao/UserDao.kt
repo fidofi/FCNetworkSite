@@ -79,14 +79,16 @@ interface UserDao {
     /**
      * 拒绝用户
      */
-    fun rejectUser(@Param("userId")userId:Long)
+    fun rejectUser(@Param("userId") userId: Long)
 
 
     fun selectUser(@Param("state") state: Int,
+                   @Param("userName") userName: String?,
                    @Param("start") start: Int,
                    @Param("pageSize") pageSize: Int): List<UserEntity>
 
 
-    fun getTotal(@Param("state")state:Int):Long
+    fun getTotal(@Param("state") state: Int,
+                 @Param("userName") userName: String?): Long
 
 }

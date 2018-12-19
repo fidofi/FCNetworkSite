@@ -3,6 +3,8 @@ package com.fido.fcnetworksite.service.impl
 import com.fido.fcnetworksite.constant.LIKE_PREFIX
 import com.fido.fcnetworksite.dao.MoodDao
 import com.fido.fcnetworksite.entity.MoodEntity
+import com.fido.fcnetworksite.enum.StatusEnum
+import com.fido.fcnetworksite.exception.BaseException
 import com.fido.fcnetworksite.service.MoodService
 import com.fido.fcnetworksite.service.PhotoService
 import com.fido.fcnetworksite.service.TimeLineService
@@ -33,6 +35,10 @@ class MoodServiceImpl : MoodService {
     private lateinit var listOperations: ListOperations<String, Any>
 
     override fun insertMood(moodVo: MoodVo) {
+        val user = userService.selectUserById(moodVo.userId)
+        if (user == null || user.status == 1) {
+            throw BaseException(StatusEnum.NO_CREATE_MOOD_PERMISSION)
+        }
         val moodEntity = MoodEntity(moodVo.content, moodVo.userId)
         moodDao.insertMood(moodEntity)
         if (moodVo.photoList != null && moodVo.photoList.isNotEmpty()) {
@@ -118,7 +124,29 @@ class MoodServiceImpl : MoodService {
         )
     }
 
-    override fun selectMoodByCondition(state: Int, userName: String, content: String, start: Int, pageSize: Int): List<MoodEntity> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun selectMoodByCondition(state: Int, userName: String?, content: String?, page: Int, pageSize: Int): PageInfoVo<MoodVo> {
+        var userId: Long? = null
+        if (userName != null) {
+            userId = userService.selectUserByName(userName)?.userId
+        }
+        val total = moodDao.getTotalByCondition(state, userId, content)
+        val start = page * pageSize
+        val entities = moodDao.selectMoodByCondition(state, userId, content, start, pageSize)
+        val userIdList = entities.map { it.userId }
+        val userInfoMap = userService.batchSelectUser(userIdList).map { it.userId to it }.toMap()
+        val photoMap = photoService.batchSelectByMoodId(entities.map { it.moodId })
+        val result = entities.map {
+            MoodVo(it.moodId, it.userId, userInfoMap[it.userId]!!.nickName, it.content,
+                    it.commentCount, it.likeCount, userInfoMap[it.userId]!!.photoUrl, photoMap[it.moodId], it.createTime, it.state)
+        }
+        return PageInfoVo(total, page, pageSize, result)
+    }
+
+    override fun passMood(moodId: Int) {
+        moodDao.updateMoodState(0, moodId)
+    }
+
+    override fun unPassMood(moodId: Int) {
+        moodDao.updateMoodState(3, moodId)
     }
 }

@@ -8,6 +8,7 @@ import com.fido.fcnetworksite.dao.PhotoDao
 import com.fido.fcnetworksite.entity.PhotoEntity
 import com.fido.fcnetworksite.service.PhotoService
 import com.fido.fcnetworksite.util.PhotoUtils
+import com.fido.fcnetworksite.util.UserInfoHolder.userId
 import com.fido.fcnetworksite.vo.PhotoVo
 import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
@@ -25,7 +26,7 @@ class PhotoServiceImpl : PhotoService {
     @Autowired
     private lateinit var photoDao: PhotoDao
 
-    override fun uploadPhotos(userId: Long, photo: MultipartFile): List<String> {
+    override fun uploadPhotos(photo: MultipartFile): List<String> {
         // 1. 创建一个FtpClient对象
         val ftpClient = FTPClient()
         // 2. 创建 ftp 连接
@@ -48,7 +49,7 @@ class PhotoServiceImpl : PhotoService {
     }
 
     override fun batchInsert(moodId: Int, list: List<String>) {
-        photoDao.insert(list.mapIndexed { index, s ->  PhotoEntity(moodId, s, index+1) })
+        photoDao.insert(list.mapIndexed { index, s -> PhotoEntity(moodId, s, index + 1) })
     }
 
     override fun select(moodId: Int): List<PhotoVo> {
@@ -56,13 +57,12 @@ class PhotoServiceImpl : PhotoService {
     }
 
     override fun batchSelectByMoodId(moodIdList: List<Int>): Map<Int, List<String>> {
-        if(moodIdList.isNotEmpty()) {
+        if (moodIdList.isNotEmpty()) {
             val photoList = photoDao.batchSelectByMoodId(moodIdList)
             val result = mutableMapOf<Int, List<String>>()
             photoList.groupBy { it.moodId }.forEach { moodId, photoList -> result[moodId] = photoList.sortedBy { it.order }.map { it.photoUrl } }
             return result
-        }
-        else{
+        } else {
             return emptyMap()
         }
     }

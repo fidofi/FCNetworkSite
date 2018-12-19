@@ -5,6 +5,7 @@ import com.fido.fcnetworksite.util.UserInfoUtils;
 import com.fido.fcnetworksite.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
  * @date: 2018/12/17 21:27
  * @description:
  */
+@Component
 public class LoginInterceptor implements HandlerInterceptor {
     private final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
@@ -30,7 +32,6 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         HttpSession session = request.getSession();
-        logger.info("interceptor session:" + session);
         // 会话暂未失效
         if (session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX) != null) {
             logger.info("session set==" + session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX));
@@ -49,15 +50,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             HttpServletResponse response,
             Object handler,
             ModelAndView modelAndView)
-            throws Exception {
-        System.out.println(">>>MyInterceptor1>>>>>>>请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后）");
-    }
+            throws Exception {}
 
     @Override
     public void afterCompletion(
             HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
-        System.out.println(
-                ">>>MyInterceptor1>>>>>>>在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）");
-    }
+            throws Exception {}
 }

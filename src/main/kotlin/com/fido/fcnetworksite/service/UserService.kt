@@ -21,7 +21,7 @@ interface UserService {
 
     fun unFreezeUser(userId: Long)
 
-    fun selectUserByName(nickName: String): UserVo
+    fun selectUserByName(nickName: String): UserVo?
 
     fun selectUserLikeName(nickName: String): List<UserVo>
 
@@ -35,5 +35,5 @@ interface UserService {
 
     fun reject(userId: Long)
 
-    fun selectUserByState(state:Int,page:Int,pageSize:Int):PageInfoVo<UserVo>
+    fun selectUserByCondition(state: Int, userName: String?, page: Int, pageSize: Int): PageInfoVo<UserVo>
 }

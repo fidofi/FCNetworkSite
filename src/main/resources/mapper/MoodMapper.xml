@@ -135,4 +135,10 @@
         </if>) t1
     </select>
 
+    <update id="updateMoodState">
+    UPDATE t_mood
+    SET c_state= #{state}
+    WHERE c_mood_id = #{moodId}
+  </update>
+
 </mapper>

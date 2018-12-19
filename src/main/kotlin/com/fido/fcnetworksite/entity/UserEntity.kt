@@ -47,11 +47,6 @@ class UserEntity {
 
     constructor()
 
-    override fun toString(): String {
-        return "UserEntity(userId=$userId, email='$email', nickName='$nickName', password='$password', sex=$sex, createTime=$createTime, updateTime=$updateTime, birthday=$birthday, photoUrl='$photoUrl', salt='$salt', status=$status, introduction='$introduction')"
-    }
-
-
 }
 
 

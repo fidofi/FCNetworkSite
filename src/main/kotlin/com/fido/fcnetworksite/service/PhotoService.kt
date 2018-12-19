@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile
  * @date: Created in 13:12 2018/10/30
  */
 interface PhotoService {
-    fun uploadPhotos(userId: Long, photo: MultipartFile): List<String>
+    fun uploadPhotos(photo: MultipartFile): List<String>
 
     fun batchInsert(moodId: Int, list: List<String>)
 

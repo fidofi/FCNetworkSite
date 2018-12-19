@@ -1,6 +1,5 @@
 package com.fido.fcnetworksite.service
 
-import com.fido.fcnetworksite.entity.MoodEntity
 import com.fido.fcnetworksite.vo.MoodVo
 import com.fido.fcnetworksite.vo.PageInfoVo
 
@@ -30,8 +29,12 @@ interface MoodService {
     fun selectPopularMoodList(pageIndex: Int, pageSize: Int): PageInfoVo<MoodVo>
 
     fun selectMoodByCondition(state: Int,
-                              userName:String,
-                              content: String,
-                              start: Int,
-                              pageSize: Int): List<MoodEntity>
+                              userName: String?,
+                              content: String?,
+                              page: Int,
+                              pageSize: Int): PageInfoVo<MoodVo>
+
+    fun passMood(moodId: Int)
+
+    fun unPassMood(moodId: Int)
 }

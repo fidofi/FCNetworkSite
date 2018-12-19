@@ -1,6 +1,5 @@
 package com.fido.fcnetworksite.service.impl
 
-import com.fido.fcnetworksite.constant.PhotoConstant
 import com.fido.fcnetworksite.constant.PrefixConstant
 import com.fido.fcnetworksite.dao.UserDao
 import com.fido.fcnetworksite.entity.UserEntity
@@ -72,6 +71,9 @@ class UserServiceImpl : UserService {
         if (transferPassword != user.password) {
             throw  UserException(StatusEnum.PASSWORD_NOT_MATCH)
         }
+        if (user.status == 2 || user.status == 3) {
+            throw UserException(StatusEnum.EMAIL_REPEAT)
+        }
         //登陆成功,存储用户信息
         val userVo = UserVo(user.userId, user.email, user.nickName, user.sex.code, user.birthday, user.photoUrl, user.introduction)
         val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
@@ -95,8 +97,11 @@ class UserServiceImpl : UserService {
                 userEntity.birthday, userEntity.photoUrl, userEntity.introduction)
     }
 
-    override fun selectUserByName(nickName: String): UserVo {
+    override fun selectUserByName(nickName: String): UserVo? {
         val userEntity = userDao.findUserByName(nickName)
+        if (userEntity == null) {
+            return null
+        }
         return UserVo(userEntity.userId, userEntity.email, userEntity.nickName, userEntity.sex.code,
                 userEntity.birthday, userEntity.photoUrl, userEntity.introduction)
     }
@@ -128,11 +133,12 @@ class UserServiceImpl : UserService {
         userDao.rejectUser(userId)
     }
 
-    override fun selectUserByState(state: Int, page: Int, pageSize: Int):PageInfoVo<UserVo> {
-        val total=  userDao.getTotal(state)
-        val start=page*pageSize
-        val result = userDao.selectUser(state, start, pageSize).map {
-            UserVo(it.userId,it.email,it.nickName,it.sex.code,it.birthday,it.photoUrl,it.introduction,status = it.status) }
+    override fun selectUserByCondition(state: Int, userName: String?, page: Int, pageSize: Int): PageInfoVo<UserVo> {
+        val total = userDao.getTotal(state, userName)
+        val start = page * pageSize
+        val result = userDao.selectUser(state, userName, start, pageSize).map {
+            UserVo(it.userId, it.email, it.nickName, it.sex.code, it.birthday, it.photoUrl, it.introduction, status = it.status)
+        }
         return PageInfoVo(total, page, pageSize, result)
     }
 }

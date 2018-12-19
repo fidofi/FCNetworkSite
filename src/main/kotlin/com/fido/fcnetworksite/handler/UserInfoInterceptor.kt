@@ -27,7 +27,6 @@ class UserInfoInterceptor : HandlerInterceptorAdapter() {
         }
         val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request;
         val session = request.session
-        logger.info("interceptor session:" + session)
         //会话暂未失效
         if (session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX) != null) {
             logger.info("session set==" + session.getAttribute(PrefixConstant.SESSION_INFO_PREFIX))
