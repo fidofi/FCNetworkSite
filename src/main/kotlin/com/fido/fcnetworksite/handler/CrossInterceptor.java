@@ -24,6 +24,9 @@ public class CrossInterceptor implements HandlerInterceptor {
             Object o)
             throws Exception {
         logger.info("inside cross interceptor");
+        if (httpServletRequest.getRequestURI().equals("/fcnetworksite/v1/user/login")) {
+            return true;
+        }
         if (httpServletRequest.getHeader(HttpHeaders.ORIGIN) != null) {
             httpServletResponse.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
             httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
@@ -31,7 +34,7 @@ public class CrossInterceptor implements HandlerInterceptor {
                     "Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT, HEAD");
             httpServletResponse.setHeader(
                     "Access-Control-Allow-Headers",
-                    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+                    "X-Requested-With, Content-Type,token,Access-Control-Allow-Credentials");
             httpServletResponse.setHeader("Access-Control-Max-Age", "86400");
             httpServletResponse.setHeader("XDomainRequestAllowed", "1");
         }
