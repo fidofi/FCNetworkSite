@@ -11,6 +11,7 @@ import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.MD5Util
 import com.fido.fcnetworksite.util.SaltUtils
 import com.fido.fcnetworksite.util.UserInfoHolder
+import com.fido.fcnetworksite.util.UserInfoUtils
 import com.fido.fcnetworksite.vo.PageInfoVo
 import com.fido.fcnetworksite.vo.UserVo
 import org.slf4j.LoggerFactory
@@ -79,7 +80,7 @@ class UserServiceImpl : UserService {
         val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
         logger.info("request:${request.session}")
         request.session.setAttribute(PrefixConstant.SESSION_INFO_PREFIX, userVo)
-        UserInfoHolder.initLocal(userVo)
+        UserInfoUtils.setUserVo(userVo)
         return userVo
     }
 
