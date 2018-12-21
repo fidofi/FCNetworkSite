@@ -9,7 +9,7 @@ import kotlin.random.Random
  * @description:
  */
 object PhotoUtils {
-    fun getName(userId: Long): String {
-        return MD5Util.encrypt(LocalDateTime.now().toString() + "-" + Random.nextLong(100)).substring(0, 10) + "-" + userId + ".jpg"
+    fun getName(): String {
+        return MD5Util.encrypt(LocalDateTime.now().toString() + "-" + java.util.Random().nextInt(1000)).substring(0, 10) + "-" +java.util.Random().nextInt(1000) + ".jpg"
     }
 }

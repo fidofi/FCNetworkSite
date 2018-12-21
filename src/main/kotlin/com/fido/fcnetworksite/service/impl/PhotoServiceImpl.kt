@@ -8,7 +8,6 @@ import com.fido.fcnetworksite.dao.PhotoDao
 import com.fido.fcnetworksite.entity.PhotoEntity
 import com.fido.fcnetworksite.service.PhotoService
 import com.fido.fcnetworksite.util.PhotoUtils
-import com.fido.fcnetworksite.util.UserInfoHolder.userId
 import com.fido.fcnetworksite.vo.PhotoVo
 import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
@@ -41,7 +40,7 @@ class PhotoServiceImpl : PhotoService {
         ftpClient.setFileType(FTP.BINARY_FILE_TYPE)
         // 7. 服务器存储文件，第一个参数是存储在服务器的文件名，第二个参数是文件流
         ftpClient.enterLocalPassiveMode()
-        val photoName = PhotoUtils.getName(userId)
+        val photoName = PhotoUtils.getName()
         ftpClient.storeFile(photoName, inputStream)
         // 8. 关闭连接
         ftpClient.logout()

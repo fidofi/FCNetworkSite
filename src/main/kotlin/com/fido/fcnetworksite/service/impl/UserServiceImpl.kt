@@ -10,7 +10,6 @@ import com.fido.fcnetworksite.exception.UserException
 import com.fido.fcnetworksite.service.UserService
 import com.fido.fcnetworksite.util.MD5Util
 import com.fido.fcnetworksite.util.SaltUtils
-import com.fido.fcnetworksite.util.UserInfoHolder
 import com.fido.fcnetworksite.util.UserInfoUtils
 import com.fido.fcnetworksite.vo.PageInfoVo
 import com.fido.fcnetworksite.vo.UserVo

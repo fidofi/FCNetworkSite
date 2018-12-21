@@ -2,7 +2,6 @@ package com.fido.fcnetworksite.config;
 
 import com.fido.fcnetworksite.handler.CrossInterceptor;
 import com.fido.fcnetworksite.handler.LoginInterceptor;
-import com.fido.fcnetworksite.handler.UserInfoInterceptor;
 import com.fido.fcnetworksite.resolver.JsonParamArgumentResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +21,10 @@ import java.util.List;
 @EnableWebMvc
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-    @Bean
-    public UserInfoInterceptor userInfoInterceptor() {
-        return new UserInfoInterceptor();
-    }
+//    @Bean
+//    public UserInfoInterceptor userInfoInterceptor() {
+//        return new UserInfoInterceptor();
+//    }
 
     @Bean
     public JsonParamArgumentResolver jsonParamArgumentResolver() {
